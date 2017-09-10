@@ -1,0 +1,1 @@
+C:\Windows\System32\cmd.exe /A /Q /K "%CD%\wmv_set_env.bat"
