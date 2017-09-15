@@ -10,6 +10,3 @@ call .\VsDevCmd.bat
 @rem )
 @rem call "%VSDIR%\Common7\Tools\VsDevCmd.bat"
 
-@rem uncomment 2 next lines and change next line to your actual wowmodelviewer source location
-@rem set WMV_BASE_PATH=D:\Development\wowmodelviewer
-@rem cd /d "%WMV_BASE_PATH%"
