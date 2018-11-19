@@ -36,6 +36,14 @@
 
 #include <QtCore/qglobal.h>
 
+#if defined(Q_CC_MSVC) && _MSC_VER > 1500
+#include <intrin.h>
+#endif
+
+#include <iterator>
+#include <utility>
+#include <algorithm>
+
 QT_BEGIN_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
@@ -65,6 +73,31 @@ QT_DEPRECATED_X("Use std::upper_bound") Q_OUTOFLINE_TEMPLATE RandomAccessIterato
 template <typename RandomAccessIterator, typename T, typename LessThan>
 QT_DEPRECATED_X("Use std::binary_search") Q_OUTOFLINE_TEMPLATE RandomAccessIterator qBinaryFindHelper(RandomAccessIterator begin, RandomAccessIterator end, const T &value, LessThan lessThan);
 #endif // QT_DEPRECATED_SINCE(5, 2)
+
+template <typename ForwardIterator1, typename ForwardIterator2>
+bool qIsPermutation(ForwardIterator1 first1, ForwardIterator1 last1, ForwardIterator2 first2)
+{
+    // find and exclude a common prefix
+    const std::pair<ForwardIterator1, ForwardIterator2> commonPrefix = std::mismatch(first1, last1, first2);
+
+    // unpack commonPrefix
+    first1 = commonPrefix.first;
+    first2 = commonPrefix.second;
+
+    // is there anything else to check? if so, for each element left to check in the
+    // first range, count how many times it appears in both ranges; the counts must match
+    if (first1 != last1) {
+        ForwardIterator2 last2 = first2;
+        std::advance(last2, std::distance(first1, last1));
+
+        for (ForwardIterator1 it = first1; it != last1; ++it) {
+            if (std::count(first1, last1, *it) != std::count(first2, last2, *it))
+                return false;
+        }
+    }
+
+    return true;
+}
 
 }
 
@@ -583,6 +616,131 @@ Q_DECL_CONST_FUNCTION Q_DECL_CONSTEXPR inline uint qPopulationCount(long unsigne
 #if defined(Q_CC_GNU) && !defined(Q_CC_CLANG)
 #undef QALGORITHMS_USE_BUILTIN_POPCOUNT
 #endif
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountTrailingZeroBits(quint32 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_ctz(v) : 32U;
+#else
+    // see http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightParallel
+    unsigned int c = 32; // c will be the number of zero bits on the right
+    v &= -signed(v);
+    if (v) c--;
+    if (v & 0x0000FFFF) c -= 16;
+    if (v & 0x00FF00FF) c -= 8;
+    if (v & 0x0F0F0F0F) c -= 4;
+    if (v & 0x33333333) c -= 2;
+    if (v & 0x55555555) c -= 1;
+    return c;
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountTrailingZeroBits(quint8 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_ctz(v) : 8U;
+#else
+    unsigned int c = 8; // c will be the number of zero bits on the right
+    v &= -signed(v);
+    if (v) c--;
+    if (v & 0x0000000F) c -= 4;
+    if (v & 0x00000033) c -= 2;
+    if (v & 0x00000055) c -= 1;
+    return c;
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountTrailingZeroBits(quint16 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_ctz(v) : 16U;
+#else
+    unsigned int c = 16; // c will be the number of zero bits on the right
+    v &= -signed(v);
+    if (v) c--;
+    if (v & 0x000000FF) c -= 8;
+    if (v & 0x00000F0F) c -= 4;
+    if (v & 0x00003333) c -= 2;
+    if (v & 0x00005555) c -= 1;
+    return c;
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountTrailingZeroBits(quint64 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_ctzll(v) : 64;
+#else
+    quint32 x = static_cast<quint32>(v);
+    return x ? qCountTrailingZeroBits(x)
+             : 32 + qCountTrailingZeroBits(static_cast<quint32>(v >> 32));
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountTrailingZeroBits(unsigned long v) Q_DECL_NOTHROW
+{
+    return qCountTrailingZeroBits(QIntegerForSizeof<long>::Unsigned(v));
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountLeadingZeroBits(quint32 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_clz(v) : 32U;
+#else
+    // Hacker's Delight, 2nd ed. Fig 5-16, p. 102
+    v = v | (v >> 1);
+    v = v | (v >> 2);
+    v = v | (v >> 4);
+    v = v | (v >> 8);
+    v = v | (v >> 16);
+    return qPopulationCount(~v);
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountLeadingZeroBits(quint8 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_clz(v)-24U : 8U;
+#else
+    v = v | (v >> 1);
+    v = v | (v >> 2);
+    v = v | (v >> 4);
+    return qPopulationCount(static_cast<quint8>(~v));
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountLeadingZeroBits(quint16 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_clz(v)-16U : 16U;
+#else
+    v = v | (v >> 1);
+    v = v | (v >> 2);
+    v = v | (v >> 4);
+    v = v | (v >> 8);
+    return qPopulationCount(static_cast<quint16>(~v));
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountLeadingZeroBits(quint64 v) Q_DECL_NOTHROW
+{
+#if defined(Q_CC_GNU)
+    return v ? __builtin_clzll(v) : 64U;
+#else
+    v = v | (v >> 1);
+    v = v | (v >> 2);
+    v = v | (v >> 4);
+    v = v | (v >> 8);
+    v = v | (v >> 16);
+    v = v | (v >> 32);
+    return qPopulationCount(~v);
+#endif
+}
+
+Q_DECL_RELAXED_CONSTEXPR inline uint qCountLeadingZeroBits(unsigned long v) Q_DECL_NOTHROW
+{
+    return qCountLeadingZeroBits(QIntegerForSizeof<long>::Unsigned(v));
+}
 
 QT_WARNING_POP
 QT_END_NAMESPACE

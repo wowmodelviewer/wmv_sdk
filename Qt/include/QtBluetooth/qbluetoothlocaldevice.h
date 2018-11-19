@@ -49,15 +49,14 @@ class QBluetoothLocalDevicePrivate;
 class Q_BLUETOOTH_EXPORT QBluetoothLocalDevice : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Pairing)
-    Q_ENUMS(HostMode)
-    Q_ENUMS(Error)
+
 public:
     enum Pairing {
         Unpaired,
         Paired,
         AuthorizedPaired
     };
+    Q_ENUM(Pairing)
 
     enum HostMode {
         HostPoweredOff,
@@ -65,14 +64,17 @@ public:
         HostDiscoverable,
         HostDiscoverableLimitedInquiry
     };
+    Q_ENUM(HostMode)
 
     enum Error {
         NoError,
         PairingError,
         UnknownError = 100
     };
-    QBluetoothLocalDevice(QObject *parent = 0);
-    explicit QBluetoothLocalDevice(const QBluetoothAddress &address, QObject *parent = 0);
+    Q_ENUM(Error)
+
+    explicit QBluetoothLocalDevice(QObject *parent = Q_NULLPTR);
+    explicit QBluetoothLocalDevice(const QBluetoothAddress &address, QObject *parent = Q_NULLPTR);
     virtual ~QBluetoothLocalDevice();
 
     bool isValid() const;
@@ -111,8 +113,8 @@ private:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(QBluetoothLocalDevice::HostMode)
 Q_DECLARE_METATYPE(QBluetoothLocalDevice::Pairing)
+Q_DECLARE_METATYPE(QBluetoothLocalDevice::HostMode)
 Q_DECLARE_METATYPE(QBluetoothLocalDevice::Error)
 
 #endif // QBLUETOOTHLOCALDEVICE_H

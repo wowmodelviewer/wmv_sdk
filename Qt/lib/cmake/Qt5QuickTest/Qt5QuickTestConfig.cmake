@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5QuickTest_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5QuickTest_VERSION instead.
-set(Qt5QuickTest_VERSION_STRING 5.5.0)
+set(Qt5QuickTest_VERSION_STRING 5.6.3)
 
 set(Qt5QuickTest_LIBRARIES Qt5::QuickTest)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::QuickTest)
 
     set(_Qt5QuickTest_OWN_INCLUDE_DIRS "${_qt5QuickTest_install_prefix}/include/" "${_qt5QuickTest_install_prefix}/include/QtQuickTest")
     set(Qt5QuickTest_PRIVATE_INCLUDE_DIRS
-        "${_qt5QuickTest_install_prefix}/include/QtQuickTest/5.5.0"
-        "${_qt5QuickTest_install_prefix}/include/QtQuickTest/5.5.0/QtQuickTest"
+        "${_qt5QuickTest_install_prefix}/include/QtQuickTest/5.6.3"
+        "${_qt5QuickTest_install_prefix}/include/QtQuickTest/5.6.3/QtQuickTest"
     )
 
     foreach(_dir ${_Qt5QuickTest_OWN_INCLUDE_DIRS})
@@ -70,7 +70,7 @@ if (NOT TARGET Qt5::QuickTest)
 
     set(Qt5QuickTest_DEFINITIONS -DQT_QMLTEST_LIB)
     set(Qt5QuickTest_COMPILE_DEFINITIONS QT_QMLTEST_LIB)
-    set(_Qt5QuickTest_MODULE_DEPENDENCIES "Widgets;Core")
+    set(_Qt5QuickTest_MODULE_DEPENDENCIES "Test;Widgets;Core")
 
 
     set(_Qt5QuickTest_FIND_DEPENDENCIES_REQUIRED)
@@ -91,7 +91,7 @@ if (NOT TARGET Qt5::QuickTest)
     foreach(_module_dep ${_Qt5QuickTest_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.5.0 ${_Qt5QuickTest_FIND_VERSION_EXACT}
+                5.6.3 ${_Qt5QuickTest_FIND_VERSION_EXACT}
                 ${_Qt5QuickTest_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5QuickTest_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -115,7 +115,7 @@ if (NOT TARGET Qt5::QuickTest)
     list(REMOVE_DUPLICATES Qt5QuickTest_COMPILE_DEFINITIONS)
     list(REMOVE_DUPLICATES Qt5QuickTest_EXECUTABLE_COMPILE_FLAGS)
 
-    set(_Qt5QuickTest_LIB_DEPENDENCIES "Qt5::Widgets;Qt5::Core")
+    set(_Qt5QuickTest_LIB_DEPENDENCIES "Qt5::Test;Qt5::Widgets;Qt5::Core")
 
 
     add_library(Qt5::QuickTest SHARED IMPORTED)

@@ -56,12 +56,11 @@ class Q_QUICKWIDGETS_EXPORT QQuickWidget : public QWidget
     Q_PROPERTY(ResizeMode resizeMode READ resizeMode WRITE setResizeMode)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
     Q_PROPERTY(QUrl source READ source WRITE setSource DESIGNABLE true)
-    Q_ENUMS(ResizeMode Status)
 
 public:
-    explicit QQuickWidget(QWidget *parent = 0);
+    explicit QQuickWidget(QWidget *parent = Q_NULLPTR);
     QQuickWidget(QQmlEngine* engine, QWidget *parent);
-    QQuickWidget(const QUrl &source, QWidget *parent = 0);
+    explicit QQuickWidget(const QUrl &source, QWidget *parent = Q_NULLPTR);
     virtual ~QQuickWidget();
 
     QUrl source() const;
@@ -72,10 +71,12 @@ public:
     QQuickItem *rootObject() const;
 
     enum ResizeMode { SizeViewToRootObject, SizeRootObjectToView };
+    Q_ENUM(ResizeMode)
     ResizeMode resizeMode() const;
     void setResizeMode(ResizeMode);
 
     enum Status { Null, Ready, Loading, Error };
+    Q_ENUM(Status)
     Status status() const;
 
     QList<QQmlError> errors() const;

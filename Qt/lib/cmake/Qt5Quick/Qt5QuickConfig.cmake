@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5Quick_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Quick_VERSION instead.
-set(Qt5Quick_VERSION_STRING 5.5.0)
+set(Qt5Quick_VERSION_STRING 5.6.3)
 
 set(Qt5Quick_LIBRARIES Qt5::Quick)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Quick)
 
     set(_Qt5Quick_OWN_INCLUDE_DIRS "${_qt5Quick_install_prefix}/include/" "${_qt5Quick_install_prefix}/include/QtQuick")
     set(Qt5Quick_PRIVATE_INCLUDE_DIRS
-        "${_qt5Quick_install_prefix}/include/QtQuick/5.5.0"
-        "${_qt5Quick_install_prefix}/include/QtQuick/5.5.0/QtQuick"
+        "${_qt5Quick_install_prefix}/include/QtQuick/5.6.3"
+        "${_qt5Quick_install_prefix}/include/QtQuick/5.6.3/QtQuick"
     )
 
     foreach(_dir ${_Qt5Quick_OWN_INCLUDE_DIRS})
@@ -70,7 +70,7 @@ if (NOT TARGET Qt5::Quick)
 
     set(Qt5Quick_DEFINITIONS -DQT_QUICK_LIB)
     set(Qt5Quick_COMPILE_DEFINITIONS QT_QUICK_LIB)
-    set(_Qt5Quick_MODULE_DEPENDENCIES "Gui;Qml;Core")
+    set(_Qt5Quick_MODULE_DEPENDENCIES "Qml;Gui;Core")
 
 
     set(_Qt5Quick_FIND_DEPENDENCIES_REQUIRED)
@@ -91,7 +91,7 @@ if (NOT TARGET Qt5::Quick)
     foreach(_module_dep ${_Qt5Quick_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.5.0 ${_Qt5Quick_FIND_VERSION_EXACT}
+                5.6.3 ${_Qt5Quick_FIND_VERSION_EXACT}
                 ${_Qt5Quick_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Quick_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -115,7 +115,7 @@ if (NOT TARGET Qt5::Quick)
     list(REMOVE_DUPLICATES Qt5Quick_COMPILE_DEFINITIONS)
     list(REMOVE_DUPLICATES Qt5Quick_EXECUTABLE_COMPILE_FLAGS)
 
-    set(_Qt5Quick_LIB_DEPENDENCIES "Qt5::Gui;Qt5::Qml;Qt5::Core")
+    set(_Qt5Quick_LIB_DEPENDENCIES "Qt5::Qml;Qt5::Gui;Qt5::Core")
 
 
     add_library(Qt5::Quick SHARED IMPORTED)

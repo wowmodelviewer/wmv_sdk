@@ -37,6 +37,7 @@
 #include <QtMultimedia/qmediaobject.h>
 #include <QtMultimedia/qmediacontent.h>
 #include <QtMultimedia/qmediaenumdebug.h>
+#include <QtMultimedia/qaudio.h>
 
 #include <QtNetwork/qnetworkconfiguration.h>
 
@@ -66,6 +67,7 @@ class Q_MULTIMEDIA_EXPORT QMediaPlayer : public QMediaObject
     Q_PROPERTY(qreal playbackRate READ playbackRate WRITE setPlaybackRate NOTIFY playbackRateChanged)
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
     Q_PROPERTY(MediaStatus mediaStatus READ mediaStatus NOTIFY mediaStatusChanged)
+    Q_PROPERTY(QAudio::Role audioRole READ audioRole WRITE setAudioRole)
     Q_PROPERTY(QString error READ errorString)
     Q_ENUMS(State)
     Q_ENUMS(MediaStatus)
@@ -111,13 +113,13 @@ public:
         MediaIsPlaylist
     };
 
-    QMediaPlayer(QObject *parent = 0, Flags flags = 0);
+    explicit QMediaPlayer(QObject *parent = Q_NULLPTR, Flags flags = Flags());
     ~QMediaPlayer();
 
     static QMultimedia::SupportEstimate hasSupport(const QString &mimeType,
                                             const QStringList& codecs = QStringList(),
-                                            Flags flags = 0);
-    static QStringList supportedMimeTypes(Flags flags = 0);
+                                                   Flags flags = Flags());
+    static QStringList supportedMimeTypes(Flags flags = Flags());
 
     void setVideoOutput(QVideoWidget *);
     void setVideoOutput(QGraphicsVideoItem *);
@@ -151,6 +153,10 @@ public:
 
     QMultimedia::AvailabilityStatus availability() const;
 
+    QAudio::Role audioRole() const;
+    void setAudioRole(QAudio::Role audioRole);
+    QList<QAudio::Role> supportedAudioRoles() const;
+
 public Q_SLOTS:
     void play();
     void pause();
@@ -162,7 +168,7 @@ public Q_SLOTS:
 
     void setPlaybackRate(qreal rate);
 
-    void setMedia(const QMediaContent &media, QIODevice *stream = 0);
+    void setMedia(const QMediaContent &media, QIODevice *stream = Q_NULLPTR);
     void setPlaylist(QMediaPlaylist *playlist);
 
     void setNetworkConfigurations(const QList<QNetworkConfiguration> &configurations);
@@ -186,6 +192,8 @@ Q_SIGNALS:
 
     void seekableChanged(bool seekable);
     void playbackRateChanged(qreal rate);
+
+    void audioRoleChanged(QAudio::Role role);
 
     void error(QMediaPlayer::Error error);
 

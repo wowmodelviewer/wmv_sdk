@@ -43,6 +43,7 @@ QT_BEGIN_NAMESPACE
 
 
 class QQuickImageProviderPrivate;
+class QQuickAsyncImageProviderPrivate;
 class QSGTexture;
 class QQuickWindow;
 
@@ -56,12 +57,31 @@ public:
     virtual QSize textureSize() const = 0;
     virtual int textureByteCount() const = 0;
     virtual QImage image() const;
+
+    static QQuickTextureFactory *textureFactoryForImage(const QImage &image);
+};
+
+class Q_QUICK_EXPORT QQuickImageResponse : public QObject
+{
+Q_OBJECT
+public:
+    QQuickImageResponse();
+    virtual ~QQuickImageResponse();
+
+    virtual QQuickTextureFactory *textureFactory() const = 0;
+    virtual QString errorString() const;
+
+public Q_SLOTS:
+    virtual void cancel();
+
+Q_SIGNALS:
+    void finished();
 };
 
 class Q_QUICK_EXPORT QQuickImageProvider : public QQmlImageProviderBase
 {
 public:
-    QQuickImageProvider(ImageType type, Flags flags = 0);
+    QQuickImageProvider(ImageType type, Flags flags = Flags());
     virtual ~QQuickImageProvider();
 
     ImageType imageType() const;
@@ -79,6 +99,18 @@ public:
 
 private:
     QQuickImageProviderPrivate *d;
+};
+
+class Q_QUICK_EXPORT QQuickAsyncImageProvider : public QQuickImageProvider
+{
+public:
+    QQuickAsyncImageProvider();
+    virtual ~QQuickAsyncImageProvider();
+
+    virtual QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) = 0;
+
+private:
+    QQuickAsyncImageProviderPrivate *d;
 };
 
 QT_END_NAMESPACE

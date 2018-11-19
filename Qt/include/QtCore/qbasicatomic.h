@@ -39,11 +39,13 @@
 #if defined(QT_BOOTSTRAPPED)
 #  include <QtCore/qatomic_bootstrap.h>
 
-// The following two are used for testing only.
-// Note that we don't check the compiler support -- you had better
-// know what you're doing if you set them
-#elif defined(QT_ATOMIC_FORCE_CXX11)
+// If C++11 atomics are supported, use them!
+#elif defined(Q_COMPILER_ATOMICS) && defined(Q_COMPILER_CONSTEXPR) && !defined(QT_ATOMIC_FORCE_NO_CXX11)
 #  include <QtCore/qatomic_cxx11.h>
+
+// The following is used for testing only.
+// Note that we don't check the compiler support -- you had better
+// know what you're doing if you set it
 #elif defined(QT_ATOMIC_FORCE_GCC)
 #  include <QtCore/qatomic_gcc.h>
 
@@ -60,14 +62,10 @@
 # include "QtCore/qatomic_armv5.h"
 #elif defined(Q_PROCESSOR_IA64)
 #  include "QtCore/qatomic_ia64.h"
-#elif defined(Q_PROCESSOR_MIPS)
-#  include "QtCore/qatomic_mips.h"
 #elif defined(Q_PROCESSOR_X86)
 #  include <QtCore/qatomic_x86.h>
 
 // Fallback compiler dependent implementation
-#elif defined(Q_COMPILER_ATOMICS) && defined(Q_COMPILER_CONSTEXPR)
-#  include <QtCore/qatomic_cxx11.h>
 #elif defined(Q_CC_GNU)
 #  include <QtCore/qatomic_gcc.h>
 
@@ -79,6 +77,9 @@
 #else
 #  error "Qt has not been ported to this platform"
 #endif
+
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_MSVC(4522)
 
 QT_BEGIN_NAMESPACE
 
@@ -251,8 +252,8 @@ public:
 
     AtomicType _q_value;
 
-    Type load() const Q_DECL_NOTHROW { return _q_value; }
-    void store(Type newValue) Q_DECL_NOTHROW { _q_value = newValue; }
+    Type load() const Q_DECL_NOTHROW { return Ops::load(_q_value); }
+    void store(Type newValue) Q_DECL_NOTHROW { Ops::store(_q_value, newValue); }
     operator Type() const Q_DECL_NOTHROW { return loadAcquire(); }
     Type operator=(Type newValue) Q_DECL_NOTHROW { storeRelease(newValue); return newValue; }
 
@@ -341,5 +342,7 @@ public:
 #endif
 
 QT_END_NAMESPACE
+
+QT_WARNING_POP
 
 #endif // QBASICATOMIC_H

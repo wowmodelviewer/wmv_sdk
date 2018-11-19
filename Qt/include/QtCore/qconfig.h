@@ -1,8 +1,13 @@
+#define QT_VERSION_MAJOR    5
+#define QT_VERSION_MINOR    6
+#define QT_VERSION_PATCH    3
+#define QT_VERSION_STR      "5.6.3"
+
 /* Everything */
 
 /* License information */
-#define QT_PRODUCT_LICENSEE "Builder Qt"
-#define QT_PRODUCT_LICENSE "Enterprise"
+#define QT_PRODUCT_LICENSEE "Open Source"
+#define QT_PRODUCT_LICENSE "OpenSource"
 
 
 // Compiler sub-arch support
@@ -115,12 +120,6 @@
 # undef QT_OPENGL_DYNAMIC
 #elif !defined(QT_OPENGL_DYNAMIC)
 # define QT_OPENGL_DYNAMIC
-#endif
-
-#if defined(QT_POINTER_SIZE) && defined(QT_NO_POINTER_SIZE)
-# undef QT_POINTER_SIZE
-#elif !defined(QT_POINTER_SIZE)
-# define QT_POINTER_SIZE 4
 #endif
 
 #define QT_QPA_DEFAULT_PLATFORM_NAME "windows"

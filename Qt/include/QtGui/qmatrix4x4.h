@@ -86,7 +86,7 @@ public:
     inline void fill(float value);
 
     double determinant() const;
-    QMatrix4x4 inverted(bool *invertible = 0) const;
+    QMatrix4x4 inverted(bool *invertible = Q_NULLPTR) const;
     QMatrix4x4 transposed() const;
     QMatrix3x3 normalMatrix() const;
 
@@ -413,8 +413,9 @@ inline QMatrix4x4& QMatrix4x4::operator-=(const QMatrix4x4& other)
     return *this;
 }
 
-inline QMatrix4x4& QMatrix4x4::operator*=(const QMatrix4x4& other)
+inline QMatrix4x4& QMatrix4x4::operator*=(const QMatrix4x4& o)
 {
+    const QMatrix4x4 other = o; // prevent aliasing when &o == this ### Qt 6: take o by value
     flagBits |= other.flagBits;
 
     if (flagBits < Rotation2D) {
