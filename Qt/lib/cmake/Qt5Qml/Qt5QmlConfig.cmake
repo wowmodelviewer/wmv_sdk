@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5Qml_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Qml_VERSION instead.
-set(Qt5Qml_VERSION_STRING 5.5.0)
+set(Qt5Qml_VERSION_STRING 5.6.3)
 
 set(Qt5Qml_LIBRARIES Qt5::Qml)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Qml)
 
     set(_Qt5Qml_OWN_INCLUDE_DIRS "${_qt5Qml_install_prefix}/include/" "${_qt5Qml_install_prefix}/include/QtQml")
     set(Qt5Qml_PRIVATE_INCLUDE_DIRS
-        "${_qt5Qml_install_prefix}/include/QtQml/5.5.0"
-        "${_qt5Qml_install_prefix}/include/QtQml/5.5.0/QtQml"
+        "${_qt5Qml_install_prefix}/include/QtQml/5.6.3"
+        "${_qt5Qml_install_prefix}/include/QtQml/5.6.3/QtQml"
     )
 
     foreach(_dir ${_Qt5Qml_OWN_INCLUDE_DIRS})
@@ -91,7 +91,7 @@ if (NOT TARGET Qt5::Qml)
     foreach(_module_dep ${_Qt5Qml_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.5.0 ${_Qt5Qml_FIND_VERSION_EXACT}
+                5.6.3 ${_Qt5Qml_FIND_VERSION_EXACT}
                 ${_Qt5Qml_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Qml_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -152,6 +152,7 @@ if (NOT TARGET Qt5::Qml)
     endif()
 
 
+    include("${CMAKE_CURRENT_LIST_DIR}/Qt5QmlConfigExtras.cmake")
 
 
 _qt5_Qml_check_file_exists("${CMAKE_CURRENT_LIST_DIR}/Qt5QmlConfigVersion.cmake")

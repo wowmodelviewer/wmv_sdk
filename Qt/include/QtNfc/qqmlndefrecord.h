@@ -52,7 +52,6 @@ class Q_NFC_EXPORT QQmlNdefRecord : public QObject
     Q_PROPERTY(TypeNameFormat typeNameFormat READ typeNameFormat WRITE setTypeNameFormat NOTIFY typeNameFormatChanged)
     Q_PROPERTY(QNdefRecord record READ record WRITE setRecord NOTIFY recordChanged)
 
-    Q_ENUMS(TypeNameFormat)
 public:
     enum TypeNameFormat {
         Empty = QNdefRecord::Empty,
@@ -62,9 +61,11 @@ public:
         ExternalRtd = QNdefRecord::ExternalRtd,
         Unknown = QNdefRecord::Unknown
     };
+    Q_ENUM(TypeNameFormat)
 
-    explicit QQmlNdefRecord(QObject *parent = 0);
-    explicit QQmlNdefRecord(const QNdefRecord &record, QObject *parent = 0);
+    explicit QQmlNdefRecord(QObject *parent = Q_NULLPTR);
+    explicit QQmlNdefRecord(const QNdefRecord &record, QObject *parent = Q_NULLPTR);
+    ~QQmlNdefRecord();
 
     QString type() const;
     void setType(const QString &t);

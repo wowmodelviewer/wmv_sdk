@@ -61,15 +61,17 @@ public:
         UnsupportedPlatformError,
         UnknownError = 100 // New errors must be added before Unknown error
     };
+    Q_ENUM(Error)
 
     enum InquiryType {
         GeneralUnlimitedInquiry,
         LimitedInquiry
     };
+    Q_ENUM(InquiryType)
 
-    QBluetoothDeviceDiscoveryAgent(QObject *parent = 0);
+    explicit QBluetoothDeviceDiscoveryAgent(QObject *parent = Q_NULLPTR);
     explicit QBluetoothDeviceDiscoveryAgent(const QBluetoothAddress &deviceAdapter,
-                                            QObject *parent = 0);
+                                            QObject *parent = Q_NULLPTR);
     ~QBluetoothDeviceDiscoveryAgent();
 
     // TODO Remove inquiry type in Qt 6 -> not really used anywhere

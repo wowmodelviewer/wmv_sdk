@@ -52,7 +52,9 @@ public:
         Image,
         Pixmap,
         Texture,
-        Invalid
+        Invalid,
+        ImageResponse
+        // ### Qt6: reorder these, and give Invalid a fixed large value
     };
 
     enum Flag {
@@ -86,7 +88,7 @@ class Q_QML_EXPORT QQmlEngine : public QJSEngine
     Q_PROPERTY(QString offlineStoragePath READ offlineStoragePath WRITE setOfflineStoragePath)
     Q_OBJECT
 public:
-    QQmlEngine(QObject *p = 0);
+    explicit QQmlEngine(QObject *p = Q_NULLPTR);
     virtual ~QQmlEngine();
 
     QQmlContext *rootContext() const;

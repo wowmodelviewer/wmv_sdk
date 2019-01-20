@@ -36,6 +36,7 @@
 
 #include <QtCore/QUrl>
 #include <QtNetwork/QAbstractSocket>
+#include <QtNetwork/QNetworkRequest>
 #ifndef QT_NO_NETWORKPROXY
 #include <QtNetwork/QNetworkProxy>
 #endif
@@ -61,7 +62,7 @@ class Q_WEBSOCKETS_EXPORT QWebSocket : public QObject
 public:
     explicit QWebSocket(const QString &origin = QString(),
                         QWebSocketProtocol::Version version = QWebSocketProtocol::VersionLatest,
-                        QObject *parent = 0);
+                        QObject *parent = Q_NULLPTR);
     virtual ~QWebSocket();
 
     void abort();
@@ -92,6 +93,7 @@ public:
     QWebSocketProtocol::Version version() const;
     QString resourceName() const;
     QUrl requestUrl() const;
+    QNetworkRequest request() const;
     QString origin() const;
     QWebSocketProtocol::CloseCode closeCode() const;
     QString closeReason() const;
@@ -109,6 +111,7 @@ public Q_SLOTS:
     void close(QWebSocketProtocol::CloseCode closeCode = QWebSocketProtocol::CloseCodeNormal,
                const QString &reason = QString());
     void open(const QUrl &url);
+    void open(const QNetworkRequest &request);
     void ping(const QByteArray &payload = QByteArray());
 #ifndef QT_NO_SSL
     void ignoreSslErrors();

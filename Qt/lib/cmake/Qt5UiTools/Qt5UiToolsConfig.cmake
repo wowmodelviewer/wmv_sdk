@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5UiTools_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5UiTools_VERSION instead.
-set(Qt5UiTools_VERSION_STRING 5.5.0)
+set(Qt5UiTools_VERSION_STRING 5.6.3)
 
 set(Qt5UiTools_LIBRARIES Qt5::UiTools)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::UiTools)
 
     set(_Qt5UiTools_OWN_INCLUDE_DIRS "${_qt5UiTools_install_prefix}/include/" "${_qt5UiTools_install_prefix}/include/QtUiTools")
     set(Qt5UiTools_PRIVATE_INCLUDE_DIRS
-        "${_qt5UiTools_install_prefix}/include/QtUiTools/5.5.0"
-        "${_qt5UiTools_install_prefix}/include/QtUiTools/5.5.0/QtUiTools"
+        "${_qt5UiTools_install_prefix}/include/QtUiTools/5.6.3"
+        "${_qt5UiTools_install_prefix}/include/QtUiTools/5.6.3/QtUiTools"
     )
 
     foreach(_dir ${_Qt5UiTools_OWN_INCLUDE_DIRS})
@@ -72,9 +72,6 @@ if (NOT TARGET Qt5::UiTools)
     set(Qt5UiTools_COMPILE_DEFINITIONS QT_UITOOLS_LIB)
     set(_Qt5UiTools_MODULE_DEPENDENCIES "Widgets;Gui;Core")
 
-    if (NOT CMAKE_VERSION VERSION_LESS 3.0.0)
-        list(APPEND _Qt5UiTools_MODULE_DEPENDENCIES "UiPlugin")
-    endif()
 
     set(_Qt5UiTools_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5UiTools_FIND_REQUIRED)
@@ -94,7 +91,7 @@ if (NOT TARGET Qt5::UiTools)
     foreach(_module_dep ${_Qt5UiTools_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.5.0 ${_Qt5UiTools_FIND_VERSION_EXACT}
+                5.6.3 ${_Qt5UiTools_FIND_VERSION_EXACT}
                 ${_Qt5UiTools_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5UiTools_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -120,9 +117,6 @@ if (NOT TARGET Qt5::UiTools)
 
     set(_Qt5UiTools_LIB_DEPENDENCIES "Qt5::Widgets;Qt5::Gui;Qt5::Core")
 
-    if (NOT CMAKE_VERSION VERSION_LESS 3.0.0)
-        list(APPEND _Qt5UiTools_LIB_DEPENDENCIES "Qt5::UiPlugin")
-    endif()
 
     add_library(Qt5::UiTools STATIC IMPORTED)
     set_property(TARGET Qt5::UiTools PROPERTY IMPORTED_LINK_INTERFACE_LANGUAGES CXX)

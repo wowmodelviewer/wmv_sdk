@@ -1,4 +1,4 @@
-CONFIG = sdk rez $$CONFIG
+CONFIG = asset_catalogs sdk rez $$CONFIG
 load(default_pre)
 
 isEmpty(QMAKE_XCODE_DEVELOPER_PATH) {
@@ -12,7 +12,7 @@ isEmpty(QMAKE_XCODE_DEVELOPER_PATH) {
         error("Xcode is not installed in $${QMAKE_XCODE_DEVELOPER_PATH}. Please use xcode-select to choose Xcode installation path.")
 
     # Make sure Xcode is set up properly
-    isEmpty($$list($$system("/usr/bin/xcrun -find xcrun 2>/dev/null"))): \
+    isEmpty($$list($$system("/usr/bin/xcrun -find xcodebuild 2>/dev/null"))): \
         error("Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild.")
 }
 
@@ -32,6 +32,8 @@ isEmpty(QMAKE_TARGET_BUNDLE_PREFIX) {
     !isEmpty(_QMAKE_CACHE_):!isEmpty(QMAKE_TARGET_BUNDLE_PREFIX): \
         cache(QMAKE_TARGET_BUNDLE_PREFIX)
 }
+
+QMAKE_ASSET_CATALOGS_APP_ICON = AppIcon
 
 # Make the default debug info format for static debug builds
 # DWARF instead of DWARF with dSYM. This cuts down build times

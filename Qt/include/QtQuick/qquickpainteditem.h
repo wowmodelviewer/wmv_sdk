@@ -43,14 +43,15 @@ class QQuickPaintedItemPrivate;
 class Q_QUICK_EXPORT QQuickPaintedItem : public QQuickItem
 {
     Q_OBJECT
-    Q_ENUMS(RenderTarget)
 
     Q_PROPERTY(QSize contentsSize READ contentsSize WRITE setContentsSize NOTIFY contentsSizeChanged)
     Q_PROPERTY(QColor fillColor READ fillColor WRITE setFillColor NOTIFY fillColorChanged)
     Q_PROPERTY(qreal contentsScale READ contentsScale WRITE setContentsScale NOTIFY contentsScaleChanged)
     Q_PROPERTY(RenderTarget renderTarget READ renderTarget WRITE setRenderTarget NOTIFY renderTargetChanged)
+    Q_PROPERTY(QSize textureSize READ textureSize WRITE setTextureSize NOTIFY textureSizeChanged)
+
 public:
-    QQuickPaintedItem(QQuickItem *parent = 0);
+    explicit QQuickPaintedItem(QQuickItem *parent = Q_NULLPTR);
     virtual ~QQuickPaintedItem();
 
     enum RenderTarget {
@@ -58,6 +59,7 @@ public:
         FramebufferObject,
         InvertedYFramebufferObject
     };
+    Q_ENUM(RenderTarget)
 
     enum PerformanceHint {
         FastFBOResizing = 0x1
@@ -88,6 +90,9 @@ public:
     qreal contentsScale() const;
     void setContentsScale(qreal);
 
+    QSize textureSize() const;
+    void setTextureSize(const QSize &size);
+
     QColor fillColor() const;
     void setFillColor(const QColor&);
 
@@ -104,11 +109,13 @@ Q_SIGNALS:
     void contentsSizeChanged();
     void contentsScaleChanged();
     void renderTargetChanged();
+    void textureSizeChanged();
 
 protected:
-    QQuickPaintedItem(QQuickPaintedItemPrivate &dd, QQuickItem *parent = 0);
+    QQuickPaintedItem(QQuickPaintedItemPrivate &dd, QQuickItem *parent = Q_NULLPTR);
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) Q_DECL_OVERRIDE;
     void releaseResources() Q_DECL_OVERRIDE;
+    void itemChange(ItemChange, const ItemChangeData &) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void invalidateSceneGraph();

@@ -53,7 +53,7 @@ class Q_QUICK_EXPORT QQuickTransform : public QObject
 {
     Q_OBJECT
 public:
-    QQuickTransform(QObject *parent = 0);
+    explicit QQuickTransform(QObject *parent = Q_NULLPTR);
     ~QQuickTransform();
 
     void appendToItem(QQuickItem *);
@@ -141,9 +141,9 @@ class Q_QUICK_EXPORT QQuickItem : public QObject, public QQmlParserStatus
 
     Q_PRIVATE_PROPERTY(QQuickItem::d_func(), QQuickItemLayer *layer READ layer DESIGNABLE false CONSTANT FINAL)
 
-    Q_ENUMS(TransformOrigin)
     Q_CLASSINFO("DefaultProperty", "data")
     Q_CLASSINFO("qt_HasQmlAccessors", "true")
+    Q_CLASSINFO("qt_QmlJSWrapperFactoryMethod", "_q_createJSWrapper(QV4::ExecutionEngine*)")
 
 public:
     enum Flag {
@@ -167,7 +167,8 @@ public:
         ItemOpacityHasChanged,     // value.realValue
         ItemActiveFocusHasChanged, // value.boolValue
         ItemRotationHasChanged,    // value.realValue
-        ItemAntialiasingHasChanged // value.boolValue
+        ItemAntialiasingHasChanged, // value.boolValue
+        ItemDevicePixelRatioHasChanged // value.realValue
     };
 
     union ItemChangeData {
@@ -187,8 +188,9 @@ public:
         Left, Center, Right,
         BottomLeft, Bottom, BottomRight
     };
+    Q_ENUM(TransformOrigin)
 
-    QQuickItem(QQuickItem *parent = 0);
+    explicit QQuickItem(QQuickItem *parent = Q_NULLPTR);
     virtual ~QQuickItem();
 
     QQuickWindow *window() const;
@@ -429,10 +431,11 @@ protected:
     virtual void updatePolish();
 
 protected:
-    QQuickItem(QQuickItemPrivate &dd, QQuickItem *parent = 0);
+    QQuickItem(QQuickItemPrivate &dd, QQuickItem *parent = Q_NULLPTR);
 
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_resourceObjectDeleted(QObject *))
+    Q_PRIVATE_SLOT(d_func(), quint64 _q_createJSWrapper(QV4::ExecutionEngine *))
 
     friend class QQuickWindow;
     friend class QQuickWindowPrivate;

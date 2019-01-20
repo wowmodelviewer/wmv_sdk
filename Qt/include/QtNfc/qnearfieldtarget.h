@@ -65,6 +65,7 @@ public:
         NfcTagType4,
         MifareTag
     };
+    Q_ENUM(Type)
 
     enum AccessMethod {
         UnknownAccess = 0x00,
@@ -72,6 +73,7 @@ public:
         TagTypeSpecificAccess = 0x02,
         LlcpAccess = 0x04
     };
+    Q_ENUM(AccessMethod)
     Q_DECLARE_FLAGS(AccessMethods, AccessMethod)
 
     enum Error {
@@ -85,6 +87,7 @@ public:
         NdefReadError,
         NdefWriteError
     };
+    Q_ENUM(Error)
 
     class RequestIdPrivate;
     class Q_NFC_EXPORT RequestId
@@ -107,7 +110,7 @@ public:
         QSharedDataPointer<RequestIdPrivate> d;
     };
 
-    explicit QNearFieldTarget(QObject *parent = 0);
+    explicit QNearFieldTarget(QObject *parent = Q_NULLPTR);
     virtual ~QNearFieldTarget();
 
     virtual QByteArray uid() const = 0;
@@ -158,6 +161,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QNearFieldTarget::AccessMethods)
 QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(QNearFieldTarget::RequestId)
-Q_DECLARE_METATYPE(QNearFieldTarget::Error)
 
 #endif // QNEARFIELDTARGET_H

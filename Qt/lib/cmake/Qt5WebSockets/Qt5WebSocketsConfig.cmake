@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5WebSockets_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5WebSockets_VERSION instead.
-set(Qt5WebSockets_VERSION_STRING 5.5.0)
+set(Qt5WebSockets_VERSION_STRING 5.6.3)
 
 set(Qt5WebSockets_LIBRARIES Qt5::WebSockets)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::WebSockets)
 
     set(_Qt5WebSockets_OWN_INCLUDE_DIRS "${_qt5WebSockets_install_prefix}/include/" "${_qt5WebSockets_install_prefix}/include/QtWebSockets")
     set(Qt5WebSockets_PRIVATE_INCLUDE_DIRS
-        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.5.0"
-        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.5.0/QtWebSockets"
+        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.6.3"
+        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.6.3/QtWebSockets"
     )
 
     foreach(_dir ${_Qt5WebSockets_OWN_INCLUDE_DIRS})
@@ -91,7 +91,7 @@ if (NOT TARGET Qt5::WebSockets)
     foreach(_module_dep ${_Qt5WebSockets_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.5.0 ${_Qt5WebSockets_FIND_VERSION_EXACT}
+                5.6.3 ${_Qt5WebSockets_FIND_VERSION_EXACT}
                 ${_Qt5WebSockets_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5WebSockets_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

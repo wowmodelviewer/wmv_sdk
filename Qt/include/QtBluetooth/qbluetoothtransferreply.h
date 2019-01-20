@@ -58,7 +58,7 @@ public:
         ResourceBusyError,
         SessionError
     };
-
+    Q_ENUM(TransferError)
 
     ~QBluetoothTransferReply();
 
@@ -82,7 +82,7 @@ Q_SIGNALS:
     void error(QBluetoothTransferReply::TransferError lastError);
 
 protected:
-    explicit QBluetoothTransferReply(QObject *parent = 0);
+    explicit QBluetoothTransferReply(QObject *parent = Q_NULLPTR);
     void setManager(QBluetoothTransferManager *manager);
     void setRequest(const QBluetoothTransferRequest &request);
 

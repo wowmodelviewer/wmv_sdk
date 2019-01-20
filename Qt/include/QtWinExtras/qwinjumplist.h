@@ -52,7 +52,7 @@ class Q_WINEXTRAS_EXPORT QWinJumpList : public QObject
     Q_PROPERTY(QString identifier READ identifier WRITE setIdentifier)
 
 public:
-    explicit QWinJumpList(QObject *parent = 0);
+    explicit QWinJumpList(QObject *parent = Q_NULLPTR);
     ~QWinJumpList();
 
     QString identifier() const;
@@ -76,6 +76,10 @@ private:
 
     Q_PRIVATE_SLOT(d_func(), void _q_rebuild())
 };
+
+#ifndef QT_NO_DEBUG_STREAM
+Q_WINEXTRAS_EXPORT QDebug operator<<(QDebug, const QWinJumpList *);
+#endif
 
 QT_END_NAMESPACE
 

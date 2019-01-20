@@ -56,8 +56,8 @@ class Q_QML_EXPORT QQmlContext : public QObject
     Q_DECLARE_PRIVATE(QQmlContext)
 
 public:
-    QQmlContext(QQmlEngine *parent, QObject *objParent=0);
-    QQmlContext(QQmlContext *parent, QObject *objParent=0);
+    QQmlContext(QQmlEngine *parent, QObject *objParent = Q_NULLPTR);
+    QQmlContext(QQmlContext *parent, QObject *objParent = Q_NULLPTR);
     virtual ~QQmlContext();
 
     bool isValid() const;
@@ -72,6 +72,7 @@ public:
     void setContextProperty(const QString &, QObject *);
     void setContextProperty(const QString &, const QVariant &);
 
+    // ### Qt 6: no need for a mutable object, this should become a const QObject pointer
     QString nameForObject(QObject *) const;
 
     QUrl resolvedUrl(const QUrl &);

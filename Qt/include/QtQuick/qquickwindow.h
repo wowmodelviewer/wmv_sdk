@@ -69,7 +69,8 @@ public:
         TextureHasAlphaChannel  = 0x0001,
         TextureHasMipmaps       = 0x0002,
         TextureOwnsGLTexture    = 0x0004,
-        TextureCanUseAtlas      = 0x0008
+        TextureCanUseAtlas      = 0x0008,
+        TextureIsOpaque         = 0x0010
     };
 
     enum RenderStage {
@@ -77,7 +78,8 @@ public:
         AfterSynchronizingStage,
         BeforeRenderingStage,
         AfterRenderingStage,
-        AfterSwapStage
+        AfterSwapStage,
+        NoStage
     };
 
     Q_DECLARE_FLAGS(CreateTextureOptions, CreateTextureOption)
@@ -85,9 +87,9 @@ public:
     enum SceneGraphError {
         ContextNotAvailable = 1
     };
-    Q_ENUMS(SceneGraphError)
+    Q_ENUM(SceneGraphError)
 
-    QQuickWindow(QWindow *parent = 0);
+    explicit QQuickWindow(QWindow *parent = Q_NULLPTR);
     explicit QQuickWindow(QQuickRenderControl *renderControl);
 
     virtual ~QQuickWindow();
@@ -121,7 +123,7 @@ public:
     // Scene graph specific functions
     QSGTexture *createTextureFromImage(const QImage &image) const;
     QSGTexture *createTextureFromImage(const QImage &image, CreateTextureOptions options) const;
-    QSGTexture *createTextureFromId(uint id, const QSize &size, CreateTextureOptions options = CreateTextureOption(0)) const;
+    QSGTexture *createTextureFromId(uint id, const QSize &size, CreateTextureOptions options = CreateTextureOption()) const;
 
     void setClearBeforeRendering(bool enabled);
     bool clearBeforeRendering() const;
@@ -168,7 +170,7 @@ public Q_SLOTS:
     void releaseResources();
 
 protected:
-    QQuickWindow(QQuickWindowPrivate &dd, QWindow *parent = 0);
+    QQuickWindow(QQuickWindowPrivate &dd, QWindow *parent = Q_NULLPTR);
 
     void exposeEvent(QExposeEvent *) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
@@ -194,7 +196,8 @@ protected:
 private Q_SLOTS:
     void maybeUpdate();
     void cleanupSceneGraph();
-    void forcePolish();
+    void physicalDpiChanged();
+    void handleScreenChanged(QScreen *screen);
     void setTransientParent_helper(QQuickWindow *window);
     void runJobsAfterSwap();
 
