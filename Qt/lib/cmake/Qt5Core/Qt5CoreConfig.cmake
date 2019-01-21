@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 Core module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5Core_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Core_VERSION instead.
-set(Qt5Core_VERSION_STRING 5.6.3)
+set(Qt5Core_VERSION_STRING 5.12.0)
 
 set(Qt5Core_LIBRARIES Qt5::Core)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Core)
 
     set(_Qt5Core_OWN_INCLUDE_DIRS "${_qt5Core_install_prefix}/include/" "${_qt5Core_install_prefix}/include/QtCore")
     set(Qt5Core_PRIVATE_INCLUDE_DIRS
-        "${_qt5Core_install_prefix}/include/QtCore/5.6.3"
-        "${_qt5Core_install_prefix}/include/QtCore/5.6.3/QtCore"
+        "${_qt5Core_install_prefix}/include/QtCore/5.12.0"
+        "${_qt5Core_install_prefix}/include/QtCore/5.12.0/QtCore"
     )
 
     foreach(_dir ${_Qt5Core_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::Core)
     set(_Qt5Core_MODULE_DEPENDENCIES "")
 
 
+    set(Qt5Core_OWN_PRIVATE_INCLUDE_DIRS ${Qt5Core_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5Core_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5Core_FIND_REQUIRED)
         set(_Qt5Core_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::Core)
     foreach(_module_dep ${_Qt5Core_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5Core_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5Core_FIND_VERSION_EXACT}
                 ${_Qt5Core_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Core_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::Core)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5Core_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::Core PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_CORE_LIB)
+
+    set_property(TARGET Qt5::Core PROPERTY INTERFACE_QT_ENABLED_FEATURES properties;animation;textcodec;big_codecs;codecs;commandlineparser;cxx11_future;textdate;datestring;filesystemiterator;filesystemwatcher;gestures;itemmodel;proxymodel;identityproxymodel;library;mimetype;processenvironment;process;statemachine;qeventtransition;regularexpression;settings;sharedmemory;sortfilterproxymodel;std-atomic64;stringlistmodel;systemsemaphore;temporaryfile;timezone;topleveldomain;translation;xmlstream;xmlstreamreader;xmlstreamwriter)
+    set_property(TARGET Qt5::Core PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5Core_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5Core_PRIVATE_DIR ${Qt5Core_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5Core_PRIVATE_DIR})
+            set(_Qt5Core_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5Core_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::CorePrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::CorePrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5Core_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5Core_PRIVATEDEPS)
+        foreach(dep ${_Qt5Core_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5Core_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::CorePrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::Core ${_Qt5Core_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_Core_target_properties(RELEASE "Qt5Core.dll" "Qt5Core.lib" )
 

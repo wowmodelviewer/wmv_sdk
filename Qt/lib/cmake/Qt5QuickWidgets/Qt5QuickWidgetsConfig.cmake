@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 QuickWidgets module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5QuickWidgets_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5QuickWidgets_VERSION instead.
-set(Qt5QuickWidgets_VERSION_STRING 5.6.3)
+set(Qt5QuickWidgets_VERSION_STRING 5.12.0)
 
 set(Qt5QuickWidgets_LIBRARIES Qt5::QuickWidgets)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::QuickWidgets)
 
     set(_Qt5QuickWidgets_OWN_INCLUDE_DIRS "${_qt5QuickWidgets_install_prefix}/include/" "${_qt5QuickWidgets_install_prefix}/include/QtQuickWidgets")
     set(Qt5QuickWidgets_PRIVATE_INCLUDE_DIRS
-        "${_qt5QuickWidgets_install_prefix}/include/QtQuickWidgets/5.6.3"
-        "${_qt5QuickWidgets_install_prefix}/include/QtQuickWidgets/5.6.3/QtQuickWidgets"
+        "${_qt5QuickWidgets_install_prefix}/include/QtQuickWidgets/5.12.0"
+        "${_qt5QuickWidgets_install_prefix}/include/QtQuickWidgets/5.12.0/QtQuickWidgets"
     )
 
     foreach(_dir ${_Qt5QuickWidgets_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::QuickWidgets)
     set(_Qt5QuickWidgets_MODULE_DEPENDENCIES "Quick;Qml;Widgets;Gui;Core")
 
 
+    set(Qt5QuickWidgets_OWN_PRIVATE_INCLUDE_DIRS ${Qt5QuickWidgets_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5QuickWidgets_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5QuickWidgets_FIND_REQUIRED)
         set(_Qt5QuickWidgets_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::QuickWidgets)
     foreach(_module_dep ${_Qt5QuickWidgets_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5QuickWidgets_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5QuickWidgets_FIND_VERSION_EXACT}
                 ${_Qt5QuickWidgets_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5QuickWidgets_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::QuickWidgets)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5QuickWidgets_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::QuickWidgets PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_QUICKWIDGETS_LIB)
+
+    set_property(TARGET Qt5::QuickWidgets PROPERTY INTERFACE_QT_ENABLED_FEATURES )
+    set_property(TARGET Qt5::QuickWidgets PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5QuickWidgets_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5QuickWidgets_PRIVATE_DIR ${Qt5QuickWidgets_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5QuickWidgets_PRIVATE_DIR})
+            set(_Qt5QuickWidgets_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5QuickWidgets_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::QuickWidgetsPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::QuickWidgetsPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5QuickWidgets_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5QuickWidgets_PRIVATEDEPS)
+        foreach(dep ${_Qt5QuickWidgets_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5QuickWidgets_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::QuickWidgetsPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::QuickWidgets ${_Qt5QuickWidgets_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_QuickWidgets_target_properties(RELEASE "Qt5QuickWidgets.dll" "Qt5QuickWidgets.lib" )
 

@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 WebSockets module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5WebSockets_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5WebSockets_VERSION instead.
-set(Qt5WebSockets_VERSION_STRING 5.6.3)
+set(Qt5WebSockets_VERSION_STRING 5.12.0)
 
 set(Qt5WebSockets_LIBRARIES Qt5::WebSockets)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::WebSockets)
 
     set(_Qt5WebSockets_OWN_INCLUDE_DIRS "${_qt5WebSockets_install_prefix}/include/" "${_qt5WebSockets_install_prefix}/include/QtWebSockets")
     set(Qt5WebSockets_PRIVATE_INCLUDE_DIRS
-        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.6.3"
-        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.6.3/QtWebSockets"
+        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.12.0"
+        "${_qt5WebSockets_install_prefix}/include/QtWebSockets/5.12.0/QtWebSockets"
     )
 
     foreach(_dir ${_Qt5WebSockets_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::WebSockets)
     set(_Qt5WebSockets_MODULE_DEPENDENCIES "Network;Core")
 
 
+    set(Qt5WebSockets_OWN_PRIVATE_INCLUDE_DIRS ${Qt5WebSockets_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5WebSockets_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5WebSockets_FIND_REQUIRED)
         set(_Qt5WebSockets_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::WebSockets)
     foreach(_module_dep ${_Qt5WebSockets_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5WebSockets_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5WebSockets_FIND_VERSION_EXACT}
                 ${_Qt5WebSockets_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5WebSockets_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::WebSockets)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5WebSockets_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::WebSockets PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_WEBSOCKETS_LIB)
+
+    set_property(TARGET Qt5::WebSockets PROPERTY INTERFACE_QT_ENABLED_FEATURES )
+    set_property(TARGET Qt5::WebSockets PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5WebSockets_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5WebSockets_PRIVATE_DIR ${Qt5WebSockets_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5WebSockets_PRIVATE_DIR})
+            set(_Qt5WebSockets_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5WebSockets_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::WebSocketsPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::WebSocketsPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5WebSockets_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5WebSockets_PRIVATEDEPS)
+        foreach(dep ${_Qt5WebSockets_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5WebSockets_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::WebSocketsPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::WebSockets ${_Qt5WebSockets_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_WebSockets_target_properties(RELEASE "Qt5WebSockets.dll" "Qt5WebSockets.lib" )
 
