@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 XmlPatterns module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5XmlPatterns_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5XmlPatterns_VERSION instead.
-set(Qt5XmlPatterns_VERSION_STRING 5.6.3)
+set(Qt5XmlPatterns_VERSION_STRING 5.12.0)
 
 set(Qt5XmlPatterns_LIBRARIES Qt5::XmlPatterns)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::XmlPatterns)
 
     set(_Qt5XmlPatterns_OWN_INCLUDE_DIRS "${_qt5XmlPatterns_install_prefix}/include/" "${_qt5XmlPatterns_install_prefix}/include/QtXmlPatterns")
     set(Qt5XmlPatterns_PRIVATE_INCLUDE_DIRS
-        "${_qt5XmlPatterns_install_prefix}/include/QtXmlPatterns/5.6.3"
-        "${_qt5XmlPatterns_install_prefix}/include/QtXmlPatterns/5.6.3/QtXmlPatterns"
+        "${_qt5XmlPatterns_install_prefix}/include/QtXmlPatterns/5.12.0"
+        "${_qt5XmlPatterns_install_prefix}/include/QtXmlPatterns/5.12.0/QtXmlPatterns"
     )
 
     foreach(_dir ${_Qt5XmlPatterns_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::XmlPatterns)
     set(_Qt5XmlPatterns_MODULE_DEPENDENCIES "Network;Core")
 
 
+    set(Qt5XmlPatterns_OWN_PRIVATE_INCLUDE_DIRS ${Qt5XmlPatterns_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5XmlPatterns_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5XmlPatterns_FIND_REQUIRED)
         set(_Qt5XmlPatterns_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::XmlPatterns)
     foreach(_module_dep ${_Qt5XmlPatterns_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5XmlPatterns_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5XmlPatterns_FIND_VERSION_EXACT}
                 ${_Qt5XmlPatterns_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5XmlPatterns_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::XmlPatterns)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5XmlPatterns_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::XmlPatterns PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_XMLPATTERNS_LIB)
+
+    set_property(TARGET Qt5::XmlPatterns PROPERTY INTERFACE_QT_ENABLED_FEATURES xml-schema)
+    set_property(TARGET Qt5::XmlPatterns PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5XmlPatterns_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5XmlPatterns_PRIVATE_DIR ${Qt5XmlPatterns_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5XmlPatterns_PRIVATE_DIR})
+            set(_Qt5XmlPatterns_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5XmlPatterns_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::XmlPatternsPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::XmlPatternsPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5XmlPatterns_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5XmlPatterns_PRIVATEDEPS)
+        foreach(dep ${_Qt5XmlPatterns_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5XmlPatterns_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::XmlPatternsPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::XmlPatterns ${_Qt5XmlPatterns_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_XmlPatterns_target_properties(RELEASE "Qt5XmlPatterns.dll" "Qt5XmlPatterns.lib" )
 

@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 OpenGL module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5OpenGL_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5OpenGL_VERSION instead.
-set(Qt5OpenGL_VERSION_STRING 5.6.3)
+set(Qt5OpenGL_VERSION_STRING 5.12.0)
 
 set(Qt5OpenGL_LIBRARIES Qt5::OpenGL)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::OpenGL)
 
     set(_Qt5OpenGL_OWN_INCLUDE_DIRS "${_qt5OpenGL_install_prefix}/include/" "${_qt5OpenGL_install_prefix}/include/QtOpenGL")
     set(Qt5OpenGL_PRIVATE_INCLUDE_DIRS
-        "${_qt5OpenGL_install_prefix}/include/QtOpenGL/5.6.3"
-        "${_qt5OpenGL_install_prefix}/include/QtOpenGL/5.6.3/QtOpenGL"
+        "${_qt5OpenGL_install_prefix}/include/QtOpenGL/5.12.0"
+        "${_qt5OpenGL_install_prefix}/include/QtOpenGL/5.12.0/QtOpenGL"
     )
 
     foreach(_dir ${_Qt5OpenGL_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::OpenGL)
     set(_Qt5OpenGL_MODULE_DEPENDENCIES "Widgets;Gui;Core")
 
 
+    set(Qt5OpenGL_OWN_PRIVATE_INCLUDE_DIRS ${Qt5OpenGL_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5OpenGL_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5OpenGL_FIND_REQUIRED)
         set(_Qt5OpenGL_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::OpenGL)
     foreach(_module_dep ${_Qt5OpenGL_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5OpenGL_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5OpenGL_FIND_VERSION_EXACT}
                 ${_Qt5OpenGL_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5OpenGL_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::OpenGL)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5OpenGL_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::OpenGL PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_OPENGL_LIB)
+
+    set_property(TARGET Qt5::OpenGL PROPERTY INTERFACE_QT_ENABLED_FEATURES )
+    set_property(TARGET Qt5::OpenGL PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5OpenGL_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5OpenGL_PRIVATE_DIR ${Qt5OpenGL_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5OpenGL_PRIVATE_DIR})
+            set(_Qt5OpenGL_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5OpenGL_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::OpenGLPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::OpenGLPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5OpenGL_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5OpenGL_PRIVATEDEPS)
+        foreach(dep ${_Qt5OpenGL_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5OpenGL_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::OpenGLPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::OpenGL ${_Qt5OpenGL_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_OpenGL_target_properties(RELEASE "Qt5OpenGL.dll" "Qt5OpenGL.lib" )
 

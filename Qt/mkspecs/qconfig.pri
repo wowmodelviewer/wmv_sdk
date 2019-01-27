@@ -1,20 +1,16 @@
-CONFIG+= release shared rtti no_plugin_manifest directwrite qpa
-host_build {
-    QT_ARCH = i386
-    QT_TARGET_ARCH = i386
-} else {
-    QT_ARCH = i386
-}
-QT_CONFIG += minimal-config small-config medium-config large-config full-config debug_and_release build_all debug release shared zlib dynamicgl png freetype harfbuzz build_all accessibility opengl ssl openssl dbus audio-backend directwrite native-gestures qpa concurrent
-#versioning 
-QT_VERSION = 5.6.3
+QT_ARCH = i386
+QT_BUILDABI = i386-little_endian-ilp32
+QT.global.enabled_features = shared debug_and_release build_all c++11 thread future concurrent
+QT.global.disabled_features = cross_compile framework rpath appstore-compliant c++14 c++1z c99 c11 pkg-config force_asserts separate_debug_info simulator_and_device static
+QT_CONFIG += shared debug_and_release debug release build_all c++11 concurrent dbus no-pkg-config stl
+CONFIG += shared release no_plugin_manifest
+QT_VERSION = 5.12.0
 QT_MAJOR_VERSION = 5
-QT_MINOR_VERSION = 6
-QT_PATCH_VERSION = 3
-
+QT_MINOR_VERSION = 12
+QT_PATCH_VERSION = 0
+QT_MSVC_MAJOR_VERSION = 19
+QT_MSVC_MINOR_VERSION = 11
+QT_MSVC_PATCH_VERSION = 25547
 QT_EDITION = OpenSource
-QT_LICHECK = licheck.exe
-QT_RELEASE_DATE = 2017-09-17
-QT_CL_MAJOR_VERSION = 19
-QT_CL_MINOR_VERSION = 00
-QT_CL_PATCH_VERSION = 24215
+QT_LICHECK =
+QT_RELEASE_DATE = 2018-12-03

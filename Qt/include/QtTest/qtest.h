@@ -1,31 +1,38 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2016 Intel Corporation.
+** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtTest module of the Qt Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL21$
+** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
 ** Licensees holding valid commercial Qt licenses may use this file in
 ** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
+** and conditions see https://www.qt.io/terms-conditions. For further
+** information use the contact form at https://www.qt.io/contact-us.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** General Public License version 3 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL3 included in the
+** packaging of this file. Please review the following information to
+** ensure the GNU Lesser General Public License version 3 requirements
+** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 2.0 or (at your option) the GNU General
+** Public license version 3 or any later version approved by the KDE Free
+** Qt Foundation. The licenses are as published by the Free Software
+** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-2.0.html and
+** https://www.gnu.org/licenses/gpl-3.0.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -34,7 +41,7 @@
 #ifndef QTEST_H
 #define QTEST_H
 
-#include <QtTest/qtest_global.h>
+#include <QtTest/qttestglobal.h>
 #include <QtTest/qtestcase.h>
 #include <QtTest/qtestdata.h>
 #include <QtTest/qbenchmark.h>
@@ -46,14 +53,13 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qvariant.h>
 #include <QtCore/qurl.h>
+#include <QtCore/quuid.h>
 
 #include <QtCore/qpoint.h>
 #include <QtCore/qsize.h>
 #include <QtCore/qrect.h>
 
-#ifdef QT_NETWORK_LIB
-#  include <QtNetwork/qhostaddress.h>
-#endif
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 
@@ -61,9 +67,14 @@ QT_BEGIN_NAMESPACE
 namespace QTest
 {
 
+template <> inline char *toString(const QStringView &str)
+{
+    return QTest::toPrettyUnicode(str);
+}
+
 template<> inline char *toString(const QString &str)
 {
-    return QTest::toPrettyUnicode(reinterpret_cast<const ushort *>(str.constData()), str.length());
+    return toString(QStringView(str));
 }
 
 template<> inline char *toString(const QLatin1String &str)
@@ -76,28 +87,28 @@ template<> inline char *toString(const QByteArray &ba)
     return QTest::toPrettyCString(ba.constData(), ba.length());
 }
 
-#ifndef QT_NO_DATESTRING
+#if QT_CONFIG(datestring)
 template<> inline char *toString(const QTime &time)
 {
     return time.isValid()
-        ? qstrdup(qPrintable(time.toString(QLatin1String("hh:mm:ss.zzz"))))
+        ? qstrdup(qPrintable(time.toString(QStringViewLiteral("hh:mm:ss.zzz"))))
         : qstrdup("Invalid QTime");
 }
 
 template<> inline char *toString(const QDate &date)
 {
     return date.isValid()
-        ? qstrdup(qPrintable(date.toString(QLatin1String("yyyy/MM/dd"))))
+        ? qstrdup(qPrintable(date.toString(QStringViewLiteral("yyyy/MM/dd"))))
         : qstrdup("Invalid QDate");
 }
 
 template<> inline char *toString(const QDateTime &dateTime)
 {
     return dateTime.isValid()
-        ? qstrdup(qPrintable(dateTime.toString(QLatin1String("yyyy/MM/dd hh:mm:ss.zzz[t]"))))
+        ? qstrdup(qPrintable(dateTime.toString(QStringViewLiteral("yyyy/MM/dd hh:mm:ss.zzz[t]"))))
         : qstrdup("Invalid QDateTime");
 }
-#endif // QT_NO_DATESTRING
+#endif // datestring
 
 template<> inline char *toString(const QChar &c)
 {
@@ -157,8 +168,13 @@ template<> inline char *toString(const QRectF &s)
 template<> inline char *toString(const QUrl &uri)
 {
     if (!uri.isValid())
-        return qstrdup(qPrintable(QStringLiteral("Invalid URL: ") + uri.errorString()));
+        return qstrdup(qPrintable(QLatin1String("Invalid URL: ") + uri.errorString()));
     return qstrdup(uri.toEncoded().constData());
+}
+
+template <> inline char *toString(const QUuid &uuid)
+{
+    return qstrdup(uuid.toByteArray().constData());
 }
 
 template<> inline char *toString(const QVariant &v)
@@ -173,7 +189,7 @@ template<> inline char *toString(const QVariant &v)
         if (!v.isNull()) {
             vstring.append(',');
             if (v.canConvert(QVariant::String)) {
-                vstring.append(qvariant_cast<QString>(v).toLocal8Bit());
+                vstring.append(v.toString().toLocal8Bit());
             }
             else {
                 vstring.append("<value not representable as string>");
@@ -185,22 +201,45 @@ template<> inline char *toString(const QVariant &v)
     return qstrdup(vstring.constData());
 }
 
-#ifdef QT_NETWORK_LIB
-template<> inline char *toString(const QHostAddress &addr)
+template <typename T1, typename T2>
+inline char *toString(const QPair<T1, T2> &pair)
 {
-    switch (addr.protocol()) {
-    case QAbstractSocket::UnknownNetworkLayerProtocol:
-        return qstrdup("<unknown address (parse error)>");
-    case QAbstractSocket::AnyIPProtocol:
-        return qstrdup("QHostAddress::Any");
-    case QAbstractSocket::IPv4Protocol:
-    case QAbstractSocket::IPv6Protocol:
-        break;
-    }
-
-    return qstrdup(addr.toString().toLatin1().constData());
+    const QScopedArrayPointer<char> first(toString(pair.first));
+    const QScopedArrayPointer<char> second(toString(pair.second));
+    return toString(QString::asprintf("QPair(%s,%s)", first.data(), second.data()));
 }
-#endif
+
+template <typename T1, typename T2>
+inline char *toString(const std::pair<T1, T2> &pair)
+{
+    const QScopedArrayPointer<char> first(toString(pair.first));
+    const QScopedArrayPointer<char> second(toString(pair.second));
+    return toString(QString::asprintf("std::pair(%s,%s)", first.data(), second.data()));
+}
+
+template <typename Tuple, int... I>
+inline char *toString(const Tuple & tuple, QtPrivate::IndexesList<I...>) {
+    using UP = std::unique_ptr<char[]>;
+    // Generate a table of N + 1 elements where N is the number of
+    // elements in the tuple.
+    // The last element is needed to support the empty tuple use case.
+    const UP data[] = {
+        UP(toString(std::get<I>(tuple)))..., UP{}
+    };
+    return formatString("std::tuple(", ")", sizeof...(I), data[I].get()...);
+}
+
+template <class... Types>
+inline char *toString(const std::tuple<Types...> &tuple)
+{
+    static const std::size_t params_count = sizeof...(Types);
+    return toString(tuple, typename QtPrivate::Indexes<params_count>::Value());
+}
+
+inline char *toString(std::nullptr_t)
+{
+    return toString(QLatin1String("nullptr"));
+}
 
 template<>
 inline bool qCompare(QString const &t1, QLatin1String const &t2, const char *actual,
@@ -245,7 +284,7 @@ inline bool qCompare(QList<T> const &t1, QList<T> const &t2, const char *actual,
             delete [] val2;
         }
     }
-    return compare_helper(isOk, msg, Q_NULLPTR, Q_NULLPTR, actual, expected, file, line);
+    return compare_helper(isOk, msg, nullptr, nullptr, actual, expected, file, line);
 }
 
 template <>
@@ -340,6 +379,10 @@ int main(int argc, char *argv[]) \
 #else
 #  define QTEST_ADD_GPU_BLACKLIST_SUPPORT_DEFS
 #  define QTEST_ADD_GPU_BLACKLIST_SUPPORT
+#endif
+
+#if defined(QT_NETWORK_LIB)
+#  include <QtTest/qtest_network.h>
 #endif
 
 #if defined(QT_WIDGETS_LIB)

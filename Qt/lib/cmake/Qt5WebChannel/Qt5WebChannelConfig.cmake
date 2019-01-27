@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 WebChannel module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5WebChannel_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5WebChannel_VERSION instead.
-set(Qt5WebChannel_VERSION_STRING 5.6.3)
+set(Qt5WebChannel_VERSION_STRING 5.12.0)
 
 set(Qt5WebChannel_LIBRARIES Qt5::WebChannel)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::WebChannel)
 
     set(_Qt5WebChannel_OWN_INCLUDE_DIRS "${_qt5WebChannel_install_prefix}/include/" "${_qt5WebChannel_install_prefix}/include/QtWebChannel")
     set(Qt5WebChannel_PRIVATE_INCLUDE_DIRS
-        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.6.3"
-        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.6.3/QtWebChannel"
+        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.0"
+        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.0/QtWebChannel"
     )
 
     foreach(_dir ${_Qt5WebChannel_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::WebChannel)
     set(_Qt5WebChannel_MODULE_DEPENDENCIES "Qml;Core")
 
 
+    set(Qt5WebChannel_OWN_PRIVATE_INCLUDE_DIRS ${Qt5WebChannel_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5WebChannel_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5WebChannel_FIND_REQUIRED)
         set(_Qt5WebChannel_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::WebChannel)
     foreach(_module_dep ${_Qt5WebChannel_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5WebChannel_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5WebChannel_FIND_VERSION_EXACT}
                 ${_Qt5WebChannel_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5WebChannel_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::WebChannel)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5WebChannel_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::WebChannel PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_WEBCHANNEL_LIB)
+
+    set_property(TARGET Qt5::WebChannel PROPERTY INTERFACE_QT_ENABLED_FEATURES )
+    set_property(TARGET Qt5::WebChannel PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5WebChannel_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5WebChannel_PRIVATE_DIR ${Qt5WebChannel_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5WebChannel_PRIVATE_DIR})
+            set(_Qt5WebChannel_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5WebChannel_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::WebChannelPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::WebChannelPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5WebChannel_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5WebChannel_PRIVATEDEPS)
+        foreach(dep ${_Qt5WebChannel_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5WebChannel_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::WebChannelPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::WebChannel ${_Qt5WebChannel_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_WebChannel_target_properties(RELEASE "Qt5WebChannel.dll" "Qt5WebChannel.lib" )
 

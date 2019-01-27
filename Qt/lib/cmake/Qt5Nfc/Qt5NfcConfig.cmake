@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 Nfc module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5Nfc_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Nfc_VERSION instead.
-set(Qt5Nfc_VERSION_STRING 5.6.3)
+set(Qt5Nfc_VERSION_STRING 5.12.0)
 
 set(Qt5Nfc_LIBRARIES Qt5::Nfc)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Nfc)
 
     set(_Qt5Nfc_OWN_INCLUDE_DIRS "${_qt5Nfc_install_prefix}/include/" "${_qt5Nfc_install_prefix}/include/QtNfc")
     set(Qt5Nfc_PRIVATE_INCLUDE_DIRS
-        "${_qt5Nfc_install_prefix}/include/QtNfc/5.6.3"
-        "${_qt5Nfc_install_prefix}/include/QtNfc/5.6.3/QtNfc"
+        "${_qt5Nfc_install_prefix}/include/QtNfc/5.12.0"
+        "${_qt5Nfc_install_prefix}/include/QtNfc/5.12.0/QtNfc"
     )
 
     foreach(_dir ${_Qt5Nfc_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::Nfc)
     set(_Qt5Nfc_MODULE_DEPENDENCIES "Core")
 
 
+    set(Qt5Nfc_OWN_PRIVATE_INCLUDE_DIRS ${Qt5Nfc_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5Nfc_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5Nfc_FIND_REQUIRED)
         set(_Qt5Nfc_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::Nfc)
     foreach(_module_dep ${_Qt5Nfc_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5Nfc_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5Nfc_FIND_VERSION_EXACT}
                 ${_Qt5Nfc_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Nfc_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::Nfc)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5Nfc_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::Nfc PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_NFC_LIB)
+
+    set_property(TARGET Qt5::Nfc PROPERTY INTERFACE_QT_ENABLED_FEATURES )
+    set_property(TARGET Qt5::Nfc PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5Nfc_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5Nfc_PRIVATE_DIR ${Qt5Nfc_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5Nfc_PRIVATE_DIR})
+            set(_Qt5Nfc_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5Nfc_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::NfcPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::NfcPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5Nfc_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5Nfc_PRIVATEDEPS)
+        foreach(dep ${_Qt5Nfc_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5Nfc_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::NfcPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::Nfc ${_Qt5Nfc_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_Nfc_target_properties(RELEASE "Qt5Nfc.dll" "Qt5Nfc.lib" )
 
