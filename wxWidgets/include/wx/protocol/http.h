@@ -1,9 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wx/protocol/http.h
+// Name:        http.h
 // Purpose:     HTTP protocol
 // Author:      Guilhem Lavaux
 // Modified by: Simo Virokannas (authentication, Dec 2005)
 // Created:     August 1997
+// RCS-ID:      $Id: http.h 41020 2006-09-05 20:47:48Z VZ $
 // Copyright:   (c) 1997, 1998 Guilhem Lavaux
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -16,78 +17,72 @@
 
 #include "wx/hashmap.h"
 #include "wx/protocol/protocol.h"
-#include "wx/buffer.h"
+
+WX_DECLARE_STRING_HASH_MAP_WITH_DECL( wxString, wxStringToStringHashMap,
+                                      class WXDLLIMPEXP_NET );
 
 class WXDLLIMPEXP_NET wxHTTP : public wxProtocol
 {
 public:
-    wxHTTP();
-    virtual ~wxHTTP();
+  wxHTTP();
+  virtual ~wxHTTP();
 
-    virtual bool Connect(const wxString& host, unsigned short port);
-    virtual bool Connect(const wxString& host) { return Connect(host, 0); }
-    virtual bool Connect(const wxSockAddress& addr, bool wait);
-    bool Abort();
+  virtual bool Connect(const wxString& host, unsigned short port);
+  virtual bool Connect(const wxString& host) { return Connect(host, 0); }
+  virtual bool Connect(wxSockAddress& addr, bool wait);
+  bool Abort();
+  wxInputStream *GetInputStream(const wxString& path);
+  inline wxProtocolError GetError() { return m_perr; }
+  wxString GetContentType();
 
-    wxInputStream *GetInputStream(const wxString& path);
+  void SetHeader(const wxString& header, const wxString& h_data);
+  wxString GetHeader(const wxString& header) const;
+  void SetPostBuffer(const wxString& post_buf);
 
-    wxString GetContentType() const;
-    wxString GetHeader(const wxString& header) const;
-    int GetResponse() const { return m_http_response; }
+  void SetProxyMode(bool on);
 
-    void SetMethod(const wxString& method) { m_method = method; }
-    void SetHeader(const wxString& header, const wxString& h_data);
-    bool SetPostText(const wxString& contentType,
-                     const wxString& data,
-                     const wxMBConv& conv = wxConvUTF8);
-    bool SetPostBuffer(const wxString& contentType, const wxMemoryBuffer& data);
-    void SetProxyMode(bool on);
+  int GetResponse() { return m_http_response; }
 
-    /* Cookies */
-    wxString GetCookie(const wxString& cookie) const;
-    bool HasCookies() const { return m_cookies.size() > 0; }
-
-    // Use the other SetPostBuffer() overload or SetPostText() instead.
-    wxDEPRECATED(void SetPostBuffer(const wxString& post_buf));
+  virtual void SetUser(const wxString& user) { m_username = user; }
+  virtual void SetPassword(const wxString& passwd ) { m_password = passwd; }
 
 protected:
-    typedef wxStringToStringHashMap::iterator wxHeaderIterator;
-    typedef wxStringToStringHashMap::const_iterator wxHeaderConstIterator;
-    typedef wxStringToStringHashMap::iterator wxCookieIterator;
-    typedef wxStringToStringHashMap::const_iterator wxCookieConstIterator;
+  enum wxHTTP_Req
+  {
+    wxHTTP_GET,
+    wxHTTP_POST,
+    wxHTTP_HEAD
+  };
 
-    bool BuildRequest(const wxString& path, const wxString& method);
-    void SendHeaders();
-    bool ParseHeaders();
+  typedef wxStringToStringHashMap::iterator wxHeaderIterator;
+  typedef wxStringToStringHashMap::const_iterator wxHeaderConstIterator;
 
-    wxString GenerateAuthString(const wxString& user, const wxString& pass) const;
+  bool BuildRequest(const wxString& path, wxHTTP_Req req);
+  void SendHeaders();
+  bool ParseHeaders();
 
-    // find the header in m_headers
-    wxHeaderIterator FindHeader(const wxString& header);
-    wxHeaderConstIterator FindHeader(const wxString& header) const;
-    wxCookieIterator FindCookie(const wxString& cookie);
-    wxCookieConstIterator FindCookie(const wxString& cookie) const;
+  wxString GenerateAuthString(const wxString& user, const wxString& pass) const;
 
-    // deletes the header value strings
-    void ClearHeaders();
-    void ClearCookies();
+  // find the header in m_headers
+  wxHeaderIterator FindHeader(const wxString& header);
+  wxHeaderConstIterator FindHeader(const wxString& header) const;
 
-    // internal variables:
+  // deletes the header value strings
+  void ClearHeaders();
 
-    wxString m_method;
-    wxStringToStringHashMap m_cookies;
+  wxProtocolError m_perr;
+  wxStringToStringHashMap m_headers;
+  bool m_read,
+       m_proxy_mode;
+  wxSockAddress *m_addr;
+  wxString m_post_buf;
+  int m_http_response;
+  wxString m_username;
+  wxString m_password;
 
-    wxStringToStringHashMap m_headers;
-    bool m_read,
-         m_proxy_mode;
-    wxSockAddress *m_addr;
-    wxMemoryBuffer m_postBuffer;
-    wxString       m_contentType;
-    int m_http_response;
-
-    DECLARE_DYNAMIC_CLASS(wxHTTP)
-    DECLARE_PROTOCOL(wxHTTP)
-    wxDECLARE_NO_COPY_CLASS(wxHTTP);
+  DECLARE_DYNAMIC_CLASS(wxHTTP)
+  DECLARE_PROTOCOL(wxHTTP)
+  DECLARE_NO_COPY_CLASS(wxHTTP)
 };
 
 #endif // wxUSE_PROTOCOL_HTTP

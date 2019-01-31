@@ -2,6 +2,7 @@
 // Name:        wx/gtk1/control.h
 // Purpose:
 // Author:      Robert Roebling
+// Id:          $Id: control.h 37341 2006-02-05 22:58:41Z VZ $
 // Copyright:   (c) 1998 Robert Roebling, Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -18,7 +19,7 @@
 // classes
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxControl;
+class WXDLLIMPEXP_CORE wxControl;
 
 typedef struct _GtkLabel GtkLabel;
 typedef struct _GtkFrame GtkFrame;
@@ -30,7 +31,7 @@ typedef struct _GtkFrame GtkFrame;
 // C-linkage function pointer types for GetDefaultAttributesFromGTKWidget
 extern "C" {
     typedef GtkWidget* (*wxGtkWidgetNew_t)(void);
-    typedef GtkWidget* (*wxGtkWidgetNewFromStr_t)(const char*);
+    typedef GtkWidget* (*wxGtkWidgetNewFromStr_t)(const gchar*);
     typedef GtkWidget* (*wxGtkWidgetNewFromAdj_t)(GtkAdjustment*);
 }
 

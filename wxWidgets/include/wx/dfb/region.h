@@ -3,6 +3,7 @@
 // Purpose:     wxRegion class
 // Author:      Vaclav Slavik
 // Created:     2006-08-08
+// RCS-ID:      $Id: region.h 41429 2006-09-25 11:47:23Z VZ $
 // Copyright:   (c) 2006 REA Elektronik GmbH
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -39,8 +40,9 @@ public:
     wxRect AsRect() const { return GetBox(); }
 
 protected:
-    virtual wxGDIRefData *CreateGDIRefData() const;
-    virtual wxGDIRefData *CloneGDIRefData(const wxGDIRefData *data) const;
+    // ref counting code
+    virtual wxObjectRefData *CreateRefData() const;
+    virtual wxObjectRefData *CloneRefData(const wxObjectRefData *data) const;
 
     // wxRegionBase pure virtuals
     virtual bool DoIsEqual(const wxRegion& region) const;
@@ -56,7 +58,7 @@ protected:
     virtual bool DoXor(const wxRegion& region);
 
 
-    friend class WXDLLIMPEXP_FWD_CORE wxRegionIterator;
+    friend class WXDLLIMPEXP_CORE wxRegionIterator;
 
     DECLARE_DYNAMIC_CLASS(wxRegion);
 };

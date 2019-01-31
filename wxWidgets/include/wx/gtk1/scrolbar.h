@@ -2,6 +2,7 @@
 // Name:        wx/gtk1/scrolbar.h
 // Purpose:
 // Author:      Robert Roebling
+// Id:          $Id: scrolbar.h 41020 2006-09-05 20:47:48Z VZ $
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -15,7 +16,7 @@
 // classes
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxScrollBar;
+class WXDLLIMPEXP_CORE wxScrollBar;
 
 //-----------------------------------------------------------------------------
 // wxScrollBar
@@ -25,7 +26,7 @@ class WXDLLIMPEXP_CORE wxScrollBar: public wxScrollBarBase
 {
 public:
     wxScrollBar()
-       { m_adjust = NULL; m_oldPos = 0.0; }
+       { m_adjust = (GtkAdjustment *) NULL; m_oldPos = 0.0; }
     inline wxScrollBar( wxWindow *parent, wxWindowID id,
            const wxPoint& pos = wxDefaultPosition,
            const wxSize& size = wxDefaultSize,

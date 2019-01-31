@@ -4,6 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     10/4/2006 8:03:20 AM
+// RCS-ID:      $Id: richtexttabspage.h 42678 2006-10-29 22:01:06Z JS $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -14,8 +15,6 @@
 /*!
  * Includes
  */
-
-#include "wx/richtext/richtextdialogpage.h"
 
 ////@begin includes
 ////@end includes
@@ -33,7 +32,7 @@
 
 ////@begin control identifiers
 #define SYMBOL_WXRICHTEXTTABSPAGE_STYLE wxRESIZE_BORDER|wxTAB_TRAVERSAL
-#define SYMBOL_WXRICHTEXTTABSPAGE_TITLE wxEmptyString
+#define SYMBOL_WXRICHTEXTTABSPAGE_TITLE _("wxRichTextFontPage")
 #define SYMBOL_WXRICHTEXTTABSPAGE_IDNAME ID_RICHTEXTTABSPAGE
 #define SYMBOL_WXRICHTEXTTABSPAGE_SIZE wxSize(400, 300)
 #define SYMBOL_WXRICHTEXTTABSPAGE_POSITION wxDefaultPosition
@@ -43,11 +42,10 @@
  * wxRichTextTabsPage class declaration
  */
 
-class WXDLLIMPEXP_RICHTEXT wxRichTextTabsPage: public wxRichTextDialogPage
+class WXDLLIMPEXP_RICHTEXT wxRichTextTabsPage: public wxPanel
 {
     DECLARE_DYNAMIC_CLASS( wxRichTextTabsPage )
     DECLARE_EVENT_TABLE()
-    DECLARE_HELP_PROVISION()
 
 public:
     /// Constructors
@@ -71,26 +69,26 @@ public:
     virtual void SortTabs();
 
     /// Gets the attributes associated with the main formatting dialog
-    wxRichTextAttr* GetAttributes();
+    wxTextAttrEx* GetAttributes();
 
 ////@begin wxRichTextTabsPage event handler declarations
 
-    /// wxEVT_LISTBOX event handler for ID_RICHTEXTTABSPAGE_TABLIST
+    /// wxEVT_COMMAND_LISTBOX_SELECTED event handler for ID_RICHTEXTTABSPAGE_TABLIST
     void OnTablistSelected( wxCommandEvent& event );
 
-    /// wxEVT_BUTTON event handler for ID_RICHTEXTTABSPAGE_NEW_TAB
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_RICHTEXTTABSPAGE_NEW_TAB
     void OnNewTabClick( wxCommandEvent& event );
 
     /// wxEVT_UPDATE_UI event handler for ID_RICHTEXTTABSPAGE_NEW_TAB
     void OnNewTabUpdate( wxUpdateUIEvent& event );
 
-    /// wxEVT_BUTTON event handler for ID_RICHTEXTTABSPAGE_DELETE_TAB
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_RICHTEXTTABSPAGE_DELETE_TAB
     void OnDeleteTabClick( wxCommandEvent& event );
 
     /// wxEVT_UPDATE_UI event handler for ID_RICHTEXTTABSPAGE_DELETE_TAB
     void OnDeleteTabUpdate( wxUpdateUIEvent& event );
 
-    /// wxEVT_BUTTON event handler for ID_RICHTEXTTABSPAGE_DELETE_ALL_TABS
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_RICHTEXTTABSPAGE_DELETE_ALL_TABS
     void OnDeleteAllTabsClick( wxCommandEvent& event );
 
     /// wxEVT_UPDATE_UI event handler for ID_RICHTEXTTABSPAGE_DELETE_ALL_TABS

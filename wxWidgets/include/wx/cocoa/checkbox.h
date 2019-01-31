@@ -4,6 +4,7 @@
 // Author:      David Elliott
 // Modified by:
 // Created:     2003/03/16
+// RCS-ID:      $Id: checkbox.h 47907 2007-08-06 14:55:00Z DE $
 // Copyright:   (c) 2003 David Elliott
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -16,7 +17,7 @@
 // ========================================================================
 // wxCheckBox
 // ========================================================================
-class WXDLLIMPEXP_CORE wxCheckBox: public wxCheckBoxBase , protected wxCocoaNSButton
+class WXDLLEXPORT wxCheckBox: public wxCheckBoxBase , protected wxCocoaNSButton
 {
     DECLARE_DYNAMIC_CLASS(wxCheckBox)
     DECLARE_EVENT_TABLE()

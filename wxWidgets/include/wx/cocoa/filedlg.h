@@ -4,6 +4,7 @@
 // Author:      Ryan Norton
 // Modified by:
 // Created:     2004-10-02
+// RCS-ID:      $Id: filedlg.h 41020 2006-09-05 20:47:48Z VZ $
 // Copyright:   (c) Ryan Norton
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -18,10 +19,10 @@ DECLARE_WXCOCOA_OBJC_CLASS(NSSavePanel);
 // wxFileDialog
 //-------------------------------------------------------------------------
 
-class WXDLLIMPEXP_CORE wxFileDialog: public wxFileDialogBase
+class WXDLLEXPORT wxFileDialog: public wxFileDialogBase
 {
     DECLARE_DYNAMIC_CLASS(wxFileDialog)
-    wxDECLARE_NO_COPY_CLASS(wxFileDialog);
+    DECLARE_NO_COPY_CLASS(wxFileDialog)
 public:
     wxFileDialog(wxWindow *parent,
                  const wxString& message = wxFileSelectorPromptStr,
@@ -39,7 +40,7 @@ public:
     virtual void GetFilenames(wxArrayString& files) const;
 
     virtual int ShowModal();
-
+    
     inline WX_NSSavePanel GetNSSavePanel()
     {   return (WX_NSSavePanel)m_cocoaNSWindow; }
 

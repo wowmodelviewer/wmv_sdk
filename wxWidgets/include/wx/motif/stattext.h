@@ -4,6 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     17/09/98
+// RCS-ID:      $Id: stattext.h 40325 2006-07-25 14:31:55Z ABX $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@
 #ifndef _WX_STATTEXT_H_
 #define _WX_STATTEXT_H_
 
-class WXDLLIMPEXP_CORE wxStaticText: public wxStaticTextBase
+class WXDLLEXPORT wxStaticText: public wxStaticTextBase
 {
     DECLARE_DYNAMIC_CLASS(wxStaticText)
 
@@ -51,10 +52,6 @@ public:
     virtual WXWidget GetLabelWidget() const
         { return m_labelWidget; }
 
-    virtual void DoSetLabel(const wxString& str);
-    virtual wxString DoGetLabel() const;
-
-    virtual wxSize DoGetBestSize() const;
 protected:
     WXWidget              m_labelWidget;
 };

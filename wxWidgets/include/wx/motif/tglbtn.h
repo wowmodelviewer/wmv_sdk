@@ -5,6 +5,7 @@
 // Author:      Mattia Barbon
 // Modified by:
 // Created:     10.02.03
+// RCS-ID:      $Id: tglbtn.h 32033 2005-02-14 11:11:56Z JJ $
 // Copyright:   (c) 2003 Mattia Barbon
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@
 
 #include "wx/checkbox.h"
 
-class WXDLLIMPEXP_CORE wxToggleButton : public wxCheckBox
+class WXDLLEXPORT wxToggleButton : public wxCheckBox
 {
 public:
     wxToggleButton() { Init(); }
@@ -36,17 +37,13 @@ public:
                  long style = 0,
                  const wxValidator& val = wxDefaultValidator,
                  const wxString &name = wxCheckBoxNameStr );
-
-protected:
-    virtual wxBorder GetDefaultBorder() const { return wxBORDER_NONE; }
-
 private:
     DECLARE_DYNAMIC_CLASS(wxToggleButton)
 
     // common part of all constructors
     void Init()
     {
-        m_evtType = wxEVT_TOGGLEBUTTON;
+        m_evtType = wxEVT_COMMAND_TOGGLEBUTTON_CLICKED;
     }
 };
 

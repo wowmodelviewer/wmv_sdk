@@ -4,6 +4,7 @@
 // Author:      Julian Smart
 // Modified by: 13.12.99 by VZ during toolbar classes reorganization
 // Created:     17/09/98
+// RCS-ID:      $Id: toolbar.h 42077 2006-10-17 14:44:52Z ABX $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@
 #ifndef _WX_TOOLBAR_H_
 #define _WX_TOOLBAR_H_
 
-class WXDLLIMPEXP_CORE wxToolBar : public wxToolBarBase
+class WXDLLEXPORT wxToolBar : public wxToolBarBase
 {
 public:
     // ctors and dtor
@@ -21,7 +22,7 @@ public:
         wxWindowID id,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
-        long style = wxTB_HORIZONTAL,
+        long style = wxNO_BORDER | wxTB_HORIZONTAL,
         const wxString& name = wxToolBarNameStr)
     {
         Init();
@@ -33,7 +34,7 @@ public:
         wxWindowID id,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
-        long style = wxTB_HORIZONTAL,
+        long style = wxNO_BORDER | wxTB_HORIZONTAL,
         const wxString& name = wxToolBarNameStr);
 
     virtual ~wxToolBar();
@@ -68,8 +69,7 @@ private:
                                           wxObject *clientData,
                                           const wxString& shortHelp,
                                           const wxString& longHelp);
-    virtual wxToolBarToolBase *CreateTool(wxControl *control,
-                                          const wxString& label);
+    virtual wxToolBarToolBase *CreateTool(wxControl *control);
 
     virtual void DoSetSize(int x, int y,
                            int width, int height,

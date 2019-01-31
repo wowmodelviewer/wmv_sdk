@@ -3,6 +3,7 @@
 // Purpose:     wxNotebook class
 // Author:      Robert Roebling
 // Modified by:
+// RCS-ID:      $Id: notebook.h 41738 2006-10-08 17:37:23Z VZ $
 // Copyright:   (c) Julian Smart and Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@
 // internal class
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxGtkNotebookPage;
+class WXDLLIMPEXP_CORE wxGtkNotebookPage;
 
 #include "wx/list.h"
 WX_DECLARE_LIST(wxGtkNotebookPage, wxGtkNotebookPagesList);
@@ -49,7 +50,7 @@ public:
   // ---------
 
     // set the currently selected page, return the index of the previously
-    // selected one (or wxNOT_FOUND on error)
+    // selected one (or -1 on error)
     // NB: this function will _not_ generate wxEVT_NOTEBOOK_PAGE_xxx events
     int SetSelection(size_t nPage) { return DoSetSelection(nPage, SetSelection_SendEvent); }
     // get the currently selected page
@@ -88,7 +89,7 @@ public:
                      wxNotebookPage *win,
                      const wxString& strText,
                      bool bSelect = false,
-                     int imageId = NO_IMAGE );
+                     int imageId = -1 );
 
     // handler for tab navigation
     // --------------------------
@@ -128,7 +129,7 @@ public:
     // flag set to true while we're inside "switch_page" callback
     bool m_inSwitchPage;
 
-    // flag set to true when the switch-page signal has been programmatically generated
+    // flag set to true when the switch-page signal has been programatically generated
     bool m_skipNextPageChangeEvent;
 
 protected:

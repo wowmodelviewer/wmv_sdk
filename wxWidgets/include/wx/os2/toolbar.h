@@ -1,9 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wx/os2/toolbar.h
+// Name:        toolbar.h
 // Purpose:     wxToolBar class
 // Author:      David Webster
 // Modified by:
 // Created:     10/17/98
+// RCS-ID:      $Id: toolbar.h 27408 2004-05-23 20:53:33Z JS $
 // Copyright:   (c) David Webster
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -18,7 +19,7 @@
 #define ID_TOOLTIMER                100
 #define ID_TOOLEXPTIMER             101
 
-class WXDLLIMPEXP_CORE wxToolBar: public wxToolBarBase
+class WXDLLEXPORT wxToolBar: public wxToolBarBase
 {
 public:
     /*
@@ -34,7 +35,7 @@ public:
                      ,wxWindowID      vId
                      ,const wxPoint&  rPos = wxDefaultPosition
                      ,const wxSize&   rSize = wxDefaultSize
-                     ,long            lStyle = wxTB_HORIZONTAL
+                     ,long            lStyle = wxNO_BORDER | wxTB_HORIZONTAL
                      ,const wxString& rName = wxToolBarNameStr
                     ) : m_vToolTimer(this, ID_TOOLTIMER)
                       , m_vToolExpTimer(this, ID_TOOLEXPTIMER)
@@ -54,7 +55,7 @@ public:
                 ,wxWindowID      vId
                 ,const wxPoint&  rPos = wxDefaultPosition
                 ,const wxSize&   rSize = wxDefaultSize
-                ,long            lStyle = wxTB_HORIZONTAL
+                ,long            lStyle = wxNO_BORDER | wxTB_HORIZONTAL
                 ,const wxString& rName = wxToolBarNameStr
                );
 
@@ -164,8 +165,7 @@ protected:
                                           ,const wxString& rsShortHelp
                                           ,const wxString& rsLongHelp
                                          );
-    virtual wxToolBarToolBase* CreateTool(wxControl* pControl,
-                                          const wxString& label);
+    virtual wxToolBarToolBase* CreateTool(wxControl* pControl);
 
     //
     // Helpers

@@ -4,6 +4,7 @@
 // Author:      Julian Smart and Guillermo Rodriguez Garcia
 // Modified by: Francesco Montorsi
 // Created:     13/8/99
+// RCS-ID:      $Id: animate.h 58350 2009-01-24 10:00:38Z FM $
 // Copyright:   (c) Julian Smart and Guillermo Rodriguez Garcia
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -26,8 +27,10 @@ typedef struct _GdkPixbufAnimationIter GdkPixbufAnimationIter;
 class WXDLLIMPEXP_ADV wxAnimation : public wxAnimationBase
 {
 public:
+#if wxABI_VERSION >= 20810
     wxAnimation(const wxString &name, wxAnimationType type = wxANIMATION_TYPE_ANY)
         : m_pixbuf(NULL) { LoadFile(name, type); }
+#endif
     wxAnimation(GdkPixbufAnimation *p = NULL);
     wxAnimation(const wxAnimation&);
     ~wxAnimation() { UnRef(); }
@@ -94,6 +97,8 @@ public:
         Create(parent, id, anim, pos, size, style, name);
     }
 
+    void Init();
+
     bool Create(wxWindow *parent, wxWindowID id,
                 const wxAnimation& anim = wxNullAnimation,
                 const wxPoint& pos = wxDefaultPosition,
@@ -110,7 +115,6 @@ public:     // event handler
 public:     // public API
 
     virtual bool LoadFile(const wxString& filename, wxAnimationType type = wxANIMATION_TYPE_ANY);
-    virtual bool Load(wxInputStream& stream, wxAnimationType type = wxANIMATION_TYPE_ANY);
 
     virtual void SetAnimation(const wxAnimation &anim);
     virtual wxAnimation GetAnimation() const
@@ -143,9 +147,6 @@ protected:      // internal vars
 
 private:
     typedef wxAnimationCtrlBase base_type;
-
-    void Init();
-
     DECLARE_DYNAMIC_CLASS(wxAnimationCtrl)
     DECLARE_EVENT_TABLE()
 };

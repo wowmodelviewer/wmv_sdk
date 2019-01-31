@@ -4,6 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     10/5/2006 3:11:58 PM
+// RCS-ID:      $Id: richtextsymboldlg.h 58466 2009-01-27 19:19:40Z BP $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -15,7 +16,6 @@
  * Includes
  */
 
-#include "wx/richtext/richtextuicustomization.h"
 #include "wx/dialog.h"
 #include "wx/vscroll.h"
 
@@ -29,7 +29,6 @@ class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 
 ////@begin forward declarations
 class wxSymbolListCtrl;
-class wxStdDialogButtonSizer;
 ////@end forward declarations
 
 // __UNICODE__ is a symbol used by DialogBlocks-generated code.
@@ -44,7 +43,7 @@ class wxStdDialogButtonSizer;
  */
 
 #define SYMBOL_WXSYMBOLPICKERDIALOG_STYLE (wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxCLOSE_BOX)
-#define SYMBOL_WXSYMBOLPICKERDIALOG_TITLE wxGetTranslation("Symbols")
+#define SYMBOL_WXSYMBOLPICKERDIALOG_TITLE wxGetTranslation(wxT("Symbols"))
 #define SYMBOL_WXSYMBOLPICKERDIALOG_IDNAME ID_SYMBOLPICKERDIALOG
 #define SYMBOL_WXSYMBOLPICKERDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_WXSYMBOLPICKERDIALOG_POSITION wxDefaultPosition
@@ -57,7 +56,6 @@ class WXDLLIMPEXP_RICHTEXT wxSymbolPickerDialog: public wxDialog
 {
     DECLARE_DYNAMIC_CLASS( wxSymbolPickerDialog )
     DECLARE_EVENT_TABLE()
-    DECLARE_HELP_PROVISION()
 
 public:
     /// Constructors
@@ -107,31 +105,29 @@ public:
 
 ////@begin wxSymbolPickerDialog event handler declarations
 
-    /// wxEVT_COMBOBOX event handler for ID_SYMBOLPICKERDIALOG_FONT
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_SYMBOLPICKERDIALOG_FONT
     void OnFontCtrlSelected( wxCommandEvent& event );
 
 #if defined(__UNICODE__)
-    /// wxEVT_COMBOBOX event handler for ID_SYMBOLPICKERDIALOG_SUBSET
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_SYMBOLPICKERDIALOG_SUBSET
     void OnSubsetSelected( wxCommandEvent& event );
-
-    /// wxEVT_UPDATE_UI event handler for ID_SYMBOLPICKERDIALOG_SUBSET
-    void OnSymbolpickerdialogSubsetUpdate( wxUpdateUIEvent& event );
 
 #endif
 #if defined(__UNICODE__)
-    /// wxEVT_COMBOBOX event handler for ID_SYMBOLPICKERDIALOG_FROM
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_SYMBOLPICKERDIALOG_FROM
     void OnFromUnicodeSelected( wxCommandEvent& event );
 
 #endif
+#if defined(__WXMSW__) || defined(__WXGTK__) || defined(__WXPM__) || defined(__WXMGL__) || defined(__WXMOTIF__) || defined(__WXCOCOA__) || defined(__WXX11__) || defined(__WXPALMOS__)
     /// wxEVT_UPDATE_UI event handler for wxID_OK
     void OnOkUpdate( wxUpdateUIEvent& event );
 
-    /// wxEVT_BUTTON event handler for wxID_HELP
-    void OnHelpClick( wxCommandEvent& event );
+#endif
+#if defined(__WXMAC__)
+    /// wxEVT_UPDATE_UI event handler for wxID_OK
+    void OnOkUpdate( wxUpdateUIEvent& event );
 
-    /// wxEVT_UPDATE_UI event handler for wxID_HELP
-    void OnHelpUpdate( wxUpdateUIEvent& event );
-
+#endif
 ////@end wxSymbolPickerDialog event handler declarations
 
 ////@begin wxSymbolPickerDialog member function declarations
@@ -139,14 +135,14 @@ public:
     wxString GetFontName() const { return m_fontName ; }
     void SetFontName(wxString value) { m_fontName = value ; }
 
+    wxString GetSymbol() const { return m_symbol ; }
+    void SetSymbol(wxString value) { m_symbol = value ; }
+
     bool GetFromUnicode() const { return m_fromUnicode ; }
     void SetFromUnicode(bool value) { m_fromUnicode = value ; }
 
     wxString GetNormalTextFontName() const { return m_normalTextFontName ; }
     void SetNormalTextFontName(wxString value) { m_normalTextFontName = value ; }
-
-    wxString GetSymbol() const { return m_symbol ; }
-    void SetSymbol(wxString value) { m_symbol = value ; }
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
@@ -166,11 +162,10 @@ public:
 #if defined(__UNICODE__)
     wxComboBox* m_fromUnicodeCtrl;
 #endif
-    wxStdDialogButtonSizer* m_stdButtonSizer;
     wxString m_fontName;
+    wxString m_symbol;
     bool m_fromUnicode;
     wxString m_normalTextFontName;
-    wxString m_symbol;
     /// Control identifiers
     enum {
         ID_SYMBOLPICKERDIALOG = 10600,
@@ -297,7 +292,7 @@ protected:
     virtual void OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const;
 
     // gets the line height
-    virtual wxCoord OnGetRowHeight(size_t line) const;
+    virtual wxCoord OnGetLineHeight(size_t line) const;
 
     // event handlers
     void OnPaint(wxPaintEvent& event);
@@ -308,7 +303,7 @@ protected:
     // common part of all ctors
     void Init();
 
-    // send the wxEVT_LISTBOX event
+    // send the wxEVT_COMMAND_LISTBOX_SELECTED event
     void SendSelectedEvent();
 
     // change the current item (in single selection listbox it also implicitly
@@ -367,7 +362,7 @@ private:
     bool        m_unicodeMode;
 
     DECLARE_EVENT_TABLE()
-    wxDECLARE_NO_COPY_CLASS(wxSymbolListCtrl);
+    DECLARE_NO_COPY_CLASS(wxSymbolListCtrl)
     DECLARE_ABSTRACT_CLASS(wxSymbolListCtrl)
 };
 

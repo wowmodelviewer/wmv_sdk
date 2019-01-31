@@ -4,6 +4,7 @@
 // Author:      David Elliott
 // Modified by:
 // Created:     2003/08/17
+// RCS-ID:      $Id: toolbar.h 47415 2007-07-13 03:06:22Z DE $
 // Copyright:   (c) 2003 David Elliott
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -24,7 +25,7 @@ typedef struct _NSPoint NSPoint;
 
 class wxToolBarTool;
 
-class WXDLLIMPEXP_CORE wxToolBar : public wxToolBarBase
+class wxToolBar : public wxToolBarBase
 {
     DECLARE_DYNAMIC_CLASS(wxToolBar)
 // ------------------------------------------------------------------------
@@ -107,8 +108,7 @@ protected:
                                           wxObject *clientData,
                                           const wxString& shortHelpString,
                                           const wxString& longHelpString);
-    virtual wxToolBarToolBase *CreateTool(wxControl *control,
-                                          const wxString& label);
+    virtual wxToolBarToolBase *CreateTool(wxControl *control);
 
     wxSize m_bestSize;
     wxFrame *m_owningFrame;

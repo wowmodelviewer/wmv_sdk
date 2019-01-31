@@ -5,6 +5,7 @@
 // Modified by:
 // Created:     14/4/2006
 // Copyright:   (c) Francesco Montorsi
+// RCS-ID:      $Id: filepicker.h 63601 2010-03-02 00:20:21Z VZ $
 // Licence:     wxWindows Licence
 /////////////////////////////////////////////////////////////////////////////
 
@@ -33,6 +34,13 @@
         return NULL;                                                          \
     }                                                                         \
                                                                               \
+    virtual bool Destroy()                                                    \
+    {                                                                         \
+        if (m_dialog)                                                         \
+            m_dialog->Destroy();                                              \
+        return wxButton::Destroy();                                           \
+    }                                                                         \
+                                                                              \
     /* even if wx derive from wxGenericFileButton, i.e. from wxButton, our */ \
     /* native GTK+ widget does not derive from GtkButton thus *all* uses   */ \
     /* GTK_BUTTON(m_widget) macro done by wxButton must be bypassed to     */ \
@@ -41,8 +49,7 @@
     /* so, override wxButton::GTKGetWindow and return NULL as GTK+ doesn't */ \
     /* give us access to the internal GdkWindow of a GtkFileChooserButton  */ \
 protected:                                                                    \
-    virtual GdkWindow *                                                       \
-    GTKGetWindow(wxArrayGdkWindows& WXUNUSED(windows)) const                  \
+    virtual GdkWindow *GTKGetWindow(wxArrayGdkWindows& WXUNUSED(windows)) const \
         { return NULL; }
 
 
@@ -53,7 +60,7 @@ protected:                                                                    \
 class WXDLLIMPEXP_CORE wxFileButton : public wxGenericFileButton
 {
 public:
-    wxFileButton() { Init(); }
+    wxFileButton() { m_dialog = NULL; }
     wxFileButton(wxWindow *parent,
                  wxWindowID id,
                  const wxString& label = wxFilePickerWidgetLabel,
@@ -66,8 +73,7 @@ public:
                  const wxValidator& validator = wxDefaultValidator,
                  const wxString& name = wxFilePickerWidgetNameStr)
     {
-        Init();
-        m_pickerStyle = style;
+        m_dialog = NULL;
         Create(parent, id, label, path, message, wildcard,
                pos, size, style, validator, name);
     }
@@ -92,22 +98,22 @@ public:     // overrides
     // event handler for the click
     void OnDialogOK(wxCommandEvent &);
 
+    // GtkFileChooserButton does not support GTK_FILE_CHOOSER_ACTION_SAVE
+    // so we replace it with GTK_FILE_CHOOSER_ACTION_OPEN; since wxFD_SAVE
+    // is not supported, wxFD_OVERWRITE_PROMPT isn't too...
+    virtual long GetDialogStyle() const
+    {
+         return (wxGenericFileButton::GetDialogStyle() &
+                     ~(wxFD_SAVE | wxFD_OVERWRITE_PROMPT)) | wxFD_OPEN;
+    }
+
     virtual void SetPath(const wxString &str);
-    virtual void SetInitialDirectory(const wxString& dir);
 
     // see macro defined above
     FILEDIRBTN_OVERRIDES
 
 protected:
     wxDialog *m_dialog;
-
-#if wxABI_VERSION >= 30004
-    virtual void DoApplyWidgetStyle(GtkRcStyle*);
-#endif
-
-private:
-    // common part of all ctors
-    void Init() { m_dialog = NULL; }
 
     DECLARE_DYNAMIC_CLASS(wxFileButton)
 };
@@ -133,8 +139,6 @@ public:
                 const wxString& name = wxFilePickerWidgetNameStr)
     {
         Init();
-
-        m_pickerStyle = style;
 
         Create(parent, id, label, path, message, wxEmptyString,
                 pos, size, style, validator, name);
@@ -166,31 +170,28 @@ public:     // overrides
     }
 
     virtual void SetPath(const wxString &str);
-    virtual void SetInitialDirectory(const wxString& dir);
 
     // see macro defined above
     FILEDIRBTN_OVERRIDES
 
 protected:
-    wxDialog *m_dialog;
-
-#if wxABI_VERSION >= 30004
-    virtual void DoApplyWidgetStyle(GtkRcStyle*);
-#endif
-
-public:    // used by the GTK callback only
-
-    bool m_bIgnoreNextChange;
-
-    void GTKUpdatePath(const char *gtkpath);
-
-private:
+    // common part of all ctors
     void Init()
     {
         m_dialog = NULL;
         m_bIgnoreNextChange = false;
     }
 
+    wxDialog *m_dialog;
+
+public:    // used by the GTK callback only
+
+    bool m_bIgnoreNextChange;
+
+    void UpdatePath(const char *gtkpath)
+        { m_path = wxString::FromUTF8(gtkpath); }
+
+private:
     DECLARE_DYNAMIC_CLASS(wxDirButton)
 };
 

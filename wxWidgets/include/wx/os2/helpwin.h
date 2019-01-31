@@ -4,6 +4,7 @@
 // Author:      David Webster
 // Modified by:
 // Created:     10/09/99
+// RCS-ID:      $Id: helpwin.h 42077 2006-10-17 14:44:52Z ABX $
 // Copyright:   (c) David Webster
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@
 
 #include "wx/helpbase.h"
 
-class WXDLLIMPEXP_CORE wxWinHelpController: public wxHelpControllerBase
+class WXDLLEXPORT wxWinHelpController: public wxHelpControllerBase
 {
   DECLARE_CLASS(wxWinHelpController)
 

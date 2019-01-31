@@ -1,9 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Name:        wx/os2/stdpaths.h
+// Name:        wx/msw/stdpaths.h
 // Purpose:     wxStandardPaths for OS/2
 // Author:      Stefan Neis
 // Modified by:
 // Created:     2004-11-06
+// RCS-ID:      $Id: stdpaths.h 34436 2005-05-31 09:20:43Z JS $
 // Copyright:   (c) 2004 Stefan Neis <Stefan.Neis@t-online.de>
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,11 +39,6 @@ public:
     virtual wxString GetDataDir() const;
     virtual wxString GetUserDataDir() const;
     virtual wxString GetPluginsDir() const;
-
-protected:
-    // Ctor is protected, use wxStandardPaths::Get() instead of instantiating
-    // objects of this class directly.
-    wxStandardPaths() { }
 
 private:
     static wxString m_prefix;

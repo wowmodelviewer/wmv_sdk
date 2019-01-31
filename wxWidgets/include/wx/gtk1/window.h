@@ -2,6 +2,7 @@
 // Name:        wx/gtk1/window.h
 // Purpose:
 // Author:      Robert Roebling
+// Id:          $Id: window.h 41810 2006-10-09 16:39:34Z VZ $
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -9,17 +10,15 @@
 #ifndef __GTKWINDOWH__
 #define __GTKWINDOWH__
 
-typedef struct _GtkTooltips GtkTooltips;
-#ifdef HAVE_XIM
-typedef struct _GdkIC GdkIC;
-typedef struct _GdkICAttr GdkICAttr;
-#endif
+// helper structure that holds class that holds GtkIMContext object and
+// some additional data needed for key events processing
+struct wxGtkIMData;
 
 //-----------------------------------------------------------------------------
 // callback definition for inserting a window (internal)
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxWindowGTK;
+class WXDLLIMPEXP_CORE wxWindowGTK;
 typedef void (*wxInsertChildFunction)( wxWindowGTK*, wxWindowGTK* );
 
 //-----------------------------------------------------------------------------
@@ -58,7 +57,7 @@ public:
     virtual void Lower();
 
     virtual bool Show( bool show = true );
-    virtual void DoEnable( bool enable );
+    virtual bool Enable( bool enable = true );
 
     virtual void SetWindowStyleFlag( long style );
 
@@ -85,6 +84,16 @@ public:
 
     virtual int GetCharHeight() const;
     virtual int GetCharWidth() const;
+    virtual void GetTextExtent(const wxString& string,
+                               int *x, int *y,
+                               int *descent = (int *) NULL,
+                               int *externalLeading = (int *) NULL,
+                               const wxFont *theFont = (const wxFont *) NULL)
+                               const;
+
+#if wxUSE_MENUS_NATIVE
+    virtual bool DoPopupMenu( wxMenu *menu, int x, int y );
+#endif // wxUSE_MENUS_NATIVE
 
     virtual void SetScrollbar( int orient, int pos, int thumbVisible,
                                int range, bool refresh = true );
@@ -93,15 +102,13 @@ public:
     virtual int GetScrollThumb( int orient ) const;
     virtual int GetScrollRange( int orient ) const;
     virtual void ScrollWindow( int dx, int dy,
-                               const wxRect* rect = NULL );
+                               const wxRect* rect = (wxRect *) NULL );
 
 #if wxUSE_DRAG_AND_DROP
     virtual void SetDropTarget( wxDropTarget *dropTarget );
 #endif // wxUSE_DRAG_AND_DROP
 
     virtual bool IsDoubleBuffered() const { return false; }
-
-    GdkWindow* GTKGetDrawingWindow() const;
 
     // implementation
     // --------------
@@ -113,11 +120,16 @@ public:
     // OnInternalIdle
     virtual void OnInternalIdle();
 
-    // Internal representation of Update()
+    // Internal represention of Update()
     void GtkUpdate();
 
     // For compatibility across platforms (not in event table)
     void OnIdle(wxIdleEvent& WXUNUSED(event)) {}
+
+    // wxGTK-specific: called recursively by Enable,
+    // to give widgets an opportunity to correct their colours after they
+    // have been changed by Enable
+    virtual void OnParentEnable( bool WXUNUSED(enable) ) {}
 
     // Used by all window classes in the widget creation process.
     bool PreCreation( wxWindowGTK *parent, const wxPoint &pos, const wxSize &size );
@@ -154,7 +166,7 @@ public:
     void GtkUpdateScrollbar(int orient);
 
     // Called from GTK signal handlers. it indicates that
-    // the layout functions have to be called later on
+    // the layouting functions have to be called later on
     // (i.e. in idle time, implemented in OnInternalIdle() ).
     void GtkUpdateSize() { m_sizeSet = false; }
 
@@ -217,16 +229,6 @@ public:
     wxInsertChildFunction  m_insertCallback;
 
     // implement the base class pure virtuals
-    virtual void DoGetTextExtent(const wxString& string,
-                               int *x, int *y,
-                               int *descent = NULL,
-                               int *externalLeading = NULL,
-                               const wxFont *theFont = NULL) const;
-
-#if wxUSE_MENUS_NATIVE
-    virtual bool DoPopupMenu( wxMenu *menu, int x, int y );
-#endif // wxUSE_MENUS_NATIVE
-
     virtual void DoClientToScreen( int *x, int *y ) const;
     virtual void DoScreenToClient( int *x, int *y ) const;
     virtual void DoGetPosition( int *x, int *y ) const;
@@ -265,7 +267,7 @@ protected:
 
 private:
     DECLARE_DYNAMIC_CLASS(wxWindowGTK)
-    wxDECLARE_NO_COPY_CLASS(wxWindowGTK);
+    DECLARE_NO_COPY_CLASS(wxWindowGTK)
 };
 
 extern WXDLLIMPEXP_CORE wxWindow *wxFindFocusedChild(wxWindowGTK *win);

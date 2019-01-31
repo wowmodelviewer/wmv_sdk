@@ -4,6 +4,7 @@
 // Author:      David Webster
 // Modified by:
 // Created:     10/06/99
+// RCS-ID:      $Id: gauge.h 56441 2008-10-19 12:57:46Z SN $
 // Copyright:   (c) David Webster
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@
 #ifndef _WX_GAUGE_H_
 #define _WX_GAUGE_H_
 
-class WXDLLIMPEXP_CORE wxGauge: public wxGaugeBase
+class WXDLLEXPORT wxGauge: public wxGaugeBase
 {
 public:
     inline wxGauge() { m_nRangeMax = 0; m_nGaugePos = 0; }
@@ -60,7 +61,7 @@ public:
     void SetValue(int nPos);
 
     inline virtual bool AcceptsFocus(void) const { return FALSE; }
-    inline virtual void Command(wxCommandEvent& WXUNUSED(rEvent)) {}
+    inline virtual void Command(wxCommandEvent& WXUNUSED(rEvent)) {};
 
 protected:
     int                             m_nRangeMax;

@@ -3,6 +3,7 @@
 // Purpose:     wxSpinCtrl class
 // Author:      Robert Roebling
 // Modified by:
+// RCS-ID:      $Id: spinctrl.h 61872 2009-09-09 22:37:05Z VZ $
 // Copyright:   (c) Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -67,10 +68,7 @@ public:
     GtkAdjustment  *m_adjust;
     float           m_oldPos;
 
-    virtual int GetBase() const { return m_base; }
-    virtual bool SetBase(int base);
-
- protected:
+protected:
     virtual wxSize DoGetBestSize() const;
 
     // Widgets that use the style->base colour for the BG colour should
@@ -78,14 +76,6 @@ public:
     virtual bool UseGTKStyleBase() const { return true; }
 
 private:
-    // Common part of all ctors.
-    void Init()
-    {
-        m_base = 10;
-    }
-
-    int m_base;
-
     DECLARE_DYNAMIC_CLASS(wxSpinCtrl)
     DECLARE_EVENT_TABLE()
 };

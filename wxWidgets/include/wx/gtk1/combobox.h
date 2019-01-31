@@ -3,6 +3,7 @@
 // Purpose:
 // Author:      Robert Roebling
 // Created:     01/02/97
+// Id:          $Id: combobox.h 41020 2006-09-05 20:47:48Z VZ $
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -20,21 +21,20 @@
 // classes
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxComboBox;
+class WXDLLIMPEXP_CORE wxComboBox;
 
 //-----------------------------------------------------------------------------
 // global data
 //-----------------------------------------------------------------------------
 
-extern WXDLLIMPEXP_DATA_CORE(const char) wxComboBoxNameStr[];
+extern WXDLLEXPORT_DATA(const wxChar) wxComboBoxNameStr[];
 extern WXDLLIMPEXP_BASE const wxChar* wxEmptyString;
 
 //-----------------------------------------------------------------------------
 // wxComboBox
 //-----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_CORE wxComboBox :
-    public wxWindowWithItems<wxControl, wxComboBoxBase>
+class WXDLLIMPEXP_CORE wxComboBox : public wxControl, public wxComboBoxBase
 {
 public:
     inline wxComboBox() {}
@@ -80,8 +80,8 @@ public:
            const wxValidator& validator = wxDefaultValidator,
            const wxString& name = wxComboBoxNameStr);
 
-    void DoClear();
-    void DoDeleteOneItem(unsigned int n);
+    void Clear();
+    void Delete(unsigned int n);
 
     virtual int FindString(const wxString& s, bool bCase = false) const;
     int GetSelection() const;
@@ -92,9 +92,8 @@ public:
     virtual void SetSelection(int n);
     virtual void SetString(unsigned int n, const wxString &text);
 
-    wxString GetValue() const { return DoGetValue(); }
+    wxString GetValue() const;
     void SetValue(const wxString& value);
-    void WriteText(const wxString& value);
 
     void Copy();
     void Cut();
@@ -154,22 +153,21 @@ public:
     bool IsOwnGtkWindow( GdkWindow *window );
     void DoApplyWidgetStyle(GtkRcStyle *style);
 
+    wxCONTROL_ITEMCONTAINER_CLIENTDATAOBJECT_RECAST
+
     static wxVisualAttributes
     GetClassDefaultAttributes(wxWindowVariant variant = wxWINDOW_VARIANT_NORMAL);
 
 protected:
-    virtual int DoInsertItems(const wxArrayStringsAdapter& items,
-                              unsigned int pos,
-                              void **clientData, wxClientDataType type);
+    virtual int DoAppend(const wxString& item);
+    virtual int DoInsert(const wxString& item, unsigned int pos);
 
     virtual void DoSetItemClientData(unsigned int n, void* clientData);
     virtual void* DoGetItemClientData(unsigned int n) const;
+    virtual void DoSetItemClientObject(unsigned int n, wxClientData* clientData);
+    virtual wxClientData* DoGetItemClientObject(unsigned int n) const;
 
     virtual wxSize DoGetBestSize() const;
-
-    // implement wxTextEntry pure virtual methods
-    virtual wxString DoGetValue() const;
-    virtual wxWindow *GetEditableWindow() { return this; }
 
     // Widgets that use the style->base colour for the BG colour should
     // override this and return true.

@@ -2,6 +2,7 @@
 // Name:        wx/gtk1/dnd.h
 // Purpose:     declaration of the wxDropTarget class
 // Author:      Robert Roebling
+// RCS-ID:      $Id: dnd.h 37065 2006-01-23 02:28:01Z MR $
 // Copyright:   (c) 1998 Vadim Zeitlin, Robert Roebling
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,13 +23,13 @@
 // classes
 //-------------------------------------------------------------------------
 
-class WXDLLIMPEXP_FWD_CORE wxWindow;
+class WXDLLIMPEXP_CORE wxWindow;
 
-class WXDLLIMPEXP_FWD_CORE wxDropTarget;
-class WXDLLIMPEXP_FWD_CORE wxTextDropTarget;
-class WXDLLIMPEXP_FWD_CORE wxFileDropTarget;
+class WXDLLIMPEXP_CORE wxDropTarget;
+class WXDLLIMPEXP_CORE wxTextDropTarget;
+class WXDLLIMPEXP_CORE wxFileDropTarget;
 
-class WXDLLIMPEXP_FWD_CORE wxDropSource;
+class WXDLLIMPEXP_CORE wxDropSource;
 
 // ----------------------------------------------------------------------------
 // macros
@@ -47,7 +48,7 @@ class WXDLLIMPEXP_FWD_CORE wxDropSource;
 class WXDLLIMPEXP_CORE wxDropTarget: public wxDropTargetBase
 {
 public:
-    wxDropTarget(wxDataObject *dataObject = NULL );
+    wxDropTarget(wxDataObject *dataObject = (wxDataObject*) NULL );
 
     virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult def);
     virtual bool OnDrop(wxCoord x, wxCoord y);
@@ -56,7 +57,7 @@ public:
 
   // implementation
 
-    GdkAtom GetMatchingPair(bool quiet = false);
+    GdkAtom GetMatchingPair();
 
     void RegisterWidget( GtkWidget *widget );
     void UnregisterWidget( GtkWidget *widget );
@@ -64,13 +65,13 @@ public:
     GdkDragContext     *m_dragContext;
     GtkWidget          *m_dragWidget;
     GtkSelectionData   *m_dragData;
-    unsigned            m_dragTime;
+    guint               m_dragTime;
     bool                m_firstMotion;     // gdk has no "gdk_drag_enter" event
 
     void SetDragContext( GdkDragContext *dc ) { m_dragContext = dc; }
     void SetDragWidget( GtkWidget *w ) { m_dragWidget = w; }
     void SetDragData( GtkSelectionData *sd ) { m_dragData = sd; }
-    void SetDragTime(unsigned time) { m_dragTime = time; }
+    void SetDragTime( guint time ) { m_dragTime = time; }
 };
 
 //-------------------------------------------------------------------------
@@ -81,7 +82,7 @@ class WXDLLIMPEXP_CORE wxDropSource: public wxDropSourceBase
 {
 public:
     // constructor. set data later with SetData()
-    wxDropSource( wxWindow *win = NULL,
+    wxDropSource( wxWindow *win = (wxWindow *)NULL,
                   const wxIcon &copy = wxNullIcon,
                   const wxIcon &move = wxNullIcon,
                   const wxIcon &none = wxNullIcon);

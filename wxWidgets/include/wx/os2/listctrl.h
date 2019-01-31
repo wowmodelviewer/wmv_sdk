@@ -1,9 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Name:        wx/os2/listctrl.h
 // Purpose:     wxListCtrl class
-// Author:
+// Author:      
 // Modified by:
-// Created:
+// Created:     
+// RCS-ID:      $Id: listctrl.h 37982 2006-03-10 21:26:59Z RD $
 // Copyright:   (c) wxWidgets team
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,11 +20,11 @@
 #include "wx/textctrl.h"
 
 
-class WXDLLIMPEXP_FWD_CORE wxImageList;
+class WXDLLEXPORT wxImageList;
 
 typedef int (wxCALLBACK *wxListCtrlCompare)(long lItem1, long lItem2, long lSortData);
 
-class WXDLLIMPEXP_CORE wxListCtrl: public wxControl
+class WXDLLEXPORT wxListCtrl: public wxControl
 {
 public:
     wxListCtrl() { Init(); }
@@ -149,8 +150,9 @@ public:
     // Item data
     //
     long GetItemData(long lItem) const;
-    bool SetItemPtrData(long item, wxUIntPtr data);
-    bool SetItemData(long item, long data) { return SetItemPtrData(item, data); }
+    bool SetItemData( long lItem
+                     ,long lData
+                    );
 
     //
     // Gets the item rectangle
@@ -307,7 +309,7 @@ public:
     // Edit the label
     //
     wxTextCtrl* EditLabel( long         lItem
-                          ,wxClassInfo* pTextControlClass = wxCLASSINFO(wxTextCtrl)
+                          ,wxClassInfo* pTextControlClass = CLASSINFO(wxTextCtrl)
                          );
 
     //
@@ -506,7 +508,7 @@ protected:
 
     //
     // Return the icon for the given item. In report view, OnGetItemImage will
-    // only be called for the first column. See OnGetItemColumnImage for
+    // only be called for the first column. See OnGetItemColumnImage for 
     // details.
     //
     virtual int OnGetItemImage(long lItem) const;
@@ -530,7 +532,7 @@ private:
 
     DECLARE_DYNAMIC_CLASS(wxListCtrl)
     DECLARE_EVENT_TABLE()
-    wxDECLARE_NO_COPY_CLASS(wxListCtrl);
+    DECLARE_NO_COPY_CLASS(wxListCtrl)
 }; // end of CLASS wxListCtrl
 
 #endif // wxUSE_LISTCTRL

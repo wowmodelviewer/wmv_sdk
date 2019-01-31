@@ -1,21 +1,22 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wx/gtk/filedlg.h
+// Name:        filedlg.h
 // Purpose:
 // Author:      Robert Roebling
+// Id:          $Id: filedlg.h 39402 2006-05-28 23:32:12Z VZ $
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _WX_GTKFILEDLG_H_
-#define _WX_GTKFILEDLG_H_
+#ifndef __GTKFILEDLGH__
+#define __GTKFILEDLGH__
 
-#include "wx/gtk/filectrl.h"    // for wxGtkFileChooser
+#include "wx/generic/filedlgg.h"
 
 //-------------------------------------------------------------------------
 // wxFileDialog
 //-------------------------------------------------------------------------
 
-class WXDLLIMPEXP_CORE wxFileDialog: public wxFileDialogBase
+class WXDLLIMPEXP_CORE wxFileDialog: public wxGenericFileDialog
 {
 public:
     wxFileDialog() { }
@@ -29,19 +30,12 @@ public:
                  const wxPoint& pos = wxDefaultPosition,
                  const wxSize& sz = wxDefaultSize,
                  const wxString& name = wxFileDialogNameStr);
-    bool Create(wxWindow *parent,
-                 const wxString& message = wxFileSelectorPromptStr,
-                 const wxString& defaultDir = wxEmptyString,
-                 const wxString& defaultFile = wxEmptyString,
-                 const wxString& wildCard = wxFileSelectorDefaultWildcardStr,
-                 long style = wxFD_DEFAULT_STYLE,
-                 const wxPoint& pos = wxDefaultPosition,
-                 const wxSize& sz = wxDefaultSize,
-                 const wxString& name = wxFileDialogNameStr);
-    virtual ~wxFileDialog();
+
+    virtual ~wxFileDialog() {}
 
     virtual wxString GetPath() const;
     virtual void GetPaths(wxArrayString& paths) const;
+    virtual wxString GetDirectory() const;
     virtual wxString GetFilename() const;
     virtual void GetFilenames(wxArrayString& files) const;
     virtual int GetFilterIndex() const;
@@ -54,11 +48,8 @@ public:
     virtual void SetFilterIndex(int filterIndex);
 
     virtual int ShowModal();
+    virtual bool Show( bool show = true );
 
-    virtual bool SupportsExtraControl() const { return true; }
-
-    // Implementation only.
-    void GTKSelectionChanged(const wxString& filename);
 
 
 protected:
@@ -70,14 +61,9 @@ protected:
 
 
 private:
-    void OnFakeOk( wxCommandEvent &event );
-    void OnSize(wxSizeEvent&);
-    virtual void AddChildGTK(wxWindowGTK* child);
-
-    wxGtkFileChooser    m_fc;
-
     DECLARE_DYNAMIC_CLASS(wxFileDialog)
     DECLARE_EVENT_TABLE()
+    void OnFakeOk( wxCommandEvent &event );
 };
 
-#endif // _WX_GTKFILEDLG_H_
+#endif // __GTKFILEDLGH__

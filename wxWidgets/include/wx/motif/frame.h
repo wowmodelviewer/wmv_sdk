@@ -4,6 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     17/09/98
+// RCS-ID:      $Id: frame.h 35692 2005-09-25 20:29:58Z VZ $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@
 #ifndef _WX_MOTIF_FRAME_H_
 #define _WX_MOTIF_FRAME_H_
 
-class WXDLLIMPEXP_CORE wxFrame : public wxFrameBase
+class WXDLLEXPORT wxFrame : public wxFrameBase
 {
 public:
     wxFrame() { Init(); }
@@ -47,6 +48,7 @@ public:
     void SetTitle(const wxString& title);
 
     // Set icon
+    virtual void SetIcon(const wxIcon& icon);
     virtual void SetIcons(const wxIconBundle& icons);
 
 #if wxUSE_STATUSBAR
@@ -86,9 +88,10 @@ public:
 
     bool PreResize();
 
+    void SendSizeEvent();
+
     // for generic/mdig.h
     virtual void DoGetClientSize(int *width, int *height) const;
-
 private:
     // common part of all ctors
     void Init();

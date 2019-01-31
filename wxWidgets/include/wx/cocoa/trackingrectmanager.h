@@ -5,6 +5,7 @@
 // Author:      David Elliott <dfe@cox.net>
 // Modified by:
 // Created:     2007/05/02
+// RCS-ID:      $Id: trackingrectmanager.h 51595 2008-02-08 09:12:04Z DE $
 // Copyright:   (c) 2007 Software 2000 Ltd.
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@
 
 class wxCocoaTrackingRectManager
 {
-    wxDECLARE_NO_COPY_CLASS(wxCocoaTrackingRectManager);
+    DECLARE_NO_COPY_CLASS(wxCocoaTrackingRectManager)
 public:
     wxCocoaTrackingRectManager(wxWindow *window);
     void ClearTrackingRect();

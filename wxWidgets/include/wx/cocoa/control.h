@@ -4,6 +4,7 @@
 // Author:      David Elliott
 // Modified by:
 // Created:     2003/02/15
+// RCS-ID:      $Id: control.h 47903 2007-08-06 14:19:41Z DE $
 // Copyright:   (c) 2003 David Elliott
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@
 // wxControl
 // ========================================================================
 
-class WXDLLIMPEXP_CORE wxControl : public wxControlBase, public wxCocoaNSControl
+class WXDLLEXPORT wxControl : public wxControlBase, public wxCocoaNSControl
 {
     DECLARE_ABSTRACT_CLASS(wxControl)
     WX_DECLARE_COCOA_OWNER(NSControl,NSView,NSView)
@@ -60,6 +61,9 @@ public:
 
     // Enables the control
     virtual void CocoaSetEnabled(bool enable);
+
+    wxString GetLabel() const;
+    void SetLabel(const wxString& label);
 protected:
     virtual wxSize DoGetBestSize() const;
 
