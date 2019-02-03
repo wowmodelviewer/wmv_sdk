@@ -12,6 +12,8 @@
 # Ensure that each module has a .qmake.cache when properly qmake'd.
 cache()
 
+load(qt_configure)
+
 load(qt_build_config)
 
 TEMPLATE = subdirs
@@ -37,30 +39,20 @@ exists($$_PRO_FILE_PWD_/examples/examples.pro) {
     sub_examples.subdir = examples
     sub_examples.target = sub-examples
     contains(SUBDIRS, sub_src): sub_examples.depends = sub_src
-    examples_need_tools: sub_examples.depends += sub_tools
+    contains(SUBDIRS, sub_tools): sub_examples.depends += sub_tools
     !contains(QT_BUILD_PARTS, examples): sub_examples.CONFIG = no_default_target no_default_install
     SUBDIRS += sub_examples
-}
-
-# Some modules still have these
-exists($$_PRO_FILE_PWD_/demos/demos.pro) {
-    sub_demos.subdir = demos
-    sub_demos.target = sub-demos
-    contains(SUBDIRS, sub_src): sub_demos.depends = sub_src
-    examples_need_tools: sub_demos.depends += sub_tools
-    !contains(QT_BUILD_PARTS, examples): sub_demos.CONFIG = no_default_target no_default_install
-    SUBDIRS += sub_demos
 }
 
 exists($$_PRO_FILE_PWD_/tests/tests.pro) {
     sub_tests.subdir = tests
     sub_tests.target = sub-tests
     contains(SUBDIRS, sub_src): sub_tests.depends = sub_src   # The tests may have a run-time only dependency on other parts
-    tests_need_tools: sub_tests.depends += sub_tools
+    contains(SUBDIRS, sub_tools): sub_tests.depends += sub_tools
     sub_tests.CONFIG = no_default_install
     !contains(QT_BUILD_PARTS, tests) {
         sub_tests.CONFIG += no_default_target
-    } else: !ios {
+    } else: !uikit {
         # Make sure these are there in case we need them
         sub_tools.CONFIG -= no_default_target
         sub_examples.CONFIG -= no_default_target
@@ -74,6 +66,7 @@ QT_BUILD_PARTS -= libs tools examples tests
 
 QMAKE_DISTCLEAN += \
     .qmake.cache \
+    config.cache \
     config.log \
     mkspecs/modules/*.pri \
     mkspecs/modules-inst/*.pri
@@ -85,7 +78,7 @@ for (t, tests): \
 testdirs = $$unique(testdirs)
 for (td, testdirs) {
     t = $$basename(td)-distclean
-    $${t}.commands = -cd $$shell_path($$td) && $(MAKE) distclean
+    $${t}.commands = -$$QMAKE_CD $$shell_path($$td) && $(MAKE) distclean
     QMAKE_EXTRA_TARGETS += $$t
     DISTCLEAN_DEPS += $$t
 }

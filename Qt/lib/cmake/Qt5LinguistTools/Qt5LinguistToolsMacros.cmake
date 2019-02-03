@@ -82,20 +82,29 @@ endfunction()
 
 
 function(QT5_ADD_TRANSLATION _qm_files)
-    foreach(_current_FILE ${ARGN})
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs OPTIONS)
+
+    cmake_parse_arguments(_LRELEASE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    set(_lrelease_files ${_LRELEASE_UNPARSED_ARGUMENTS})
+
+    foreach(_current_FILE ${_lrelease_files})
         get_filename_component(_abs_FILE ${_current_FILE} ABSOLUTE)
-        get_filename_component(qm ${_abs_FILE} NAME_WE)
+        get_filename_component(qm ${_abs_FILE} NAME)
+        # everything before the last dot has to be considered the file name (including other dots)
+        string(REGEX REPLACE "\\.[^.]*$" "" FILE_NAME ${qm})
         get_source_file_property(output_location ${_abs_FILE} OUTPUT_LOCATION)
         if(output_location)
             file(MAKE_DIRECTORY "${output_location}")
-            set(qm "${output_location}/${qm}.qm")
+            set(qm "${output_location}/${FILE_NAME}.qm")
         else()
-            set(qm "${CMAKE_CURRENT_BINARY_DIR}/${qm}.qm")
+            set(qm "${CMAKE_CURRENT_BINARY_DIR}/${FILE_NAME}.qm")
         endif()
 
         add_custom_command(OUTPUT ${qm}
             COMMAND ${Qt5_LRELEASE_EXECUTABLE}
-            ARGS ${_abs_FILE} -qm ${qm}
+            ARGS ${_LRELEASE_OPTIONS} ${_abs_FILE} -qm ${qm}
             DEPENDS ${_abs_FILE} VERBATIM
         )
         list(APPEND ${_qm_files} ${qm})

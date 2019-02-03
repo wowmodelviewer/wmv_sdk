@@ -1,12 +1,12 @@
 
-if (CMAKE_VERSION VERSION_LESS 2.8.3)
-    message(FATAL_ERROR "Qt 5 requires at least CMake version 2.8.3")
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+    message(FATAL_ERROR "Qt 5 Widgets module requires at least CMake version 3.1.0")
 endif()
 
 get_filename_component(_qt5Widgets_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Widgets_VERSION instead.
-set(Qt5Widgets_VERSION_STRING 5.6.3)
+set(Qt5Widgets_VERSION_STRING 5.12.0)
 
 set(Qt5Widgets_LIBRARIES Qt5::Widgets)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Widgets)
 
     set(_Qt5Widgets_OWN_INCLUDE_DIRS "${_qt5Widgets_install_prefix}/include/" "${_qt5Widgets_install_prefix}/include/QtWidgets")
     set(Qt5Widgets_PRIVATE_INCLUDE_DIRS
-        "${_qt5Widgets_install_prefix}/include/QtWidgets/5.6.3"
-        "${_qt5Widgets_install_prefix}/include/QtWidgets/5.6.3/QtWidgets"
+        "${_qt5Widgets_install_prefix}/include/QtWidgets/5.12.0"
+        "${_qt5Widgets_install_prefix}/include/QtWidgets/5.12.0/QtWidgets"
     )
 
     foreach(_dir ${_Qt5Widgets_OWN_INCLUDE_DIRS})
@@ -73,6 +73,8 @@ if (NOT TARGET Qt5::Widgets)
     set(_Qt5Widgets_MODULE_DEPENDENCIES "Gui;Core")
 
 
+    set(Qt5Widgets_OWN_PRIVATE_INCLUDE_DIRS ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+
     set(_Qt5Widgets_FIND_DEPENDENCIES_REQUIRED)
     if (Qt5Widgets_FIND_REQUIRED)
         set(_Qt5Widgets_FIND_DEPENDENCIES_REQUIRED REQUIRED)
@@ -91,7 +93,7 @@ if (NOT TARGET Qt5::Widgets)
     foreach(_module_dep ${_Qt5Widgets_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.6.3 ${_Qt5Widgets_FIND_VERSION_EXACT}
+                5.12.0 ${_Qt5Widgets_FIND_VERSION_EXACT}
                 ${_Qt5Widgets_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Widgets_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
@@ -124,6 +126,32 @@ if (NOT TARGET Qt5::Widgets)
       INTERFACE_INCLUDE_DIRECTORIES ${_Qt5Widgets_OWN_INCLUDE_DIRS})
     set_property(TARGET Qt5::Widgets PROPERTY
       INTERFACE_COMPILE_DEFINITIONS QT_WIDGETS_LIB)
+
+    set_property(TARGET Qt5::Widgets PROPERTY INTERFACE_QT_ENABLED_FEATURES abstractbutton;abstractslider;groupbox;buttongroup;label;pushbutton;menu;lineedit;spinbox;slider;scrollbar;scrollarea;itemviews;tableview;toolbutton;calendarwidget;checkbox;dialog;dialogbuttonbox;colordialog;listview;columnview;combobox;commandlinkbutton;completer;contextmenu;datawidgetmapper;datetimeedit;dial;filesystemmodel;dirmodel;resizehandler;mainwindow;dockwidget;textedit;errormessage;splitter;stackedwidget;treeview;filedialog;fontcombobox;fontdialog;formlayout;fscompleter;graphicsview;graphicseffect;inputdialog;keysequenceedit;lcdnumber;listwidget;mdiarea;menubar;messagebox;paint_debug;progressbar;progressdialog;radiobutton;rubberband;scroller;sizegrip;splashscreen;statusbar;statustip;style-stylesheet;syntaxhighlighter;tabbar;tablewidget;tabwidget;textbrowser;toolbar;toolbox;tooltip;treewidget;undocommand;undostack;undogroup;undoview;wizard)
+    set_property(TARGET Qt5::Widgets PROPERTY INTERFACE_QT_DISABLED_FEATURES )
+
+    set(_Qt5Widgets_PRIVATE_DIRS_EXIST TRUE)
+    foreach (_Qt5Widgets_PRIVATE_DIR ${Qt5Widgets_OWN_PRIVATE_INCLUDE_DIRS})
+        if (NOT EXISTS ${_Qt5Widgets_PRIVATE_DIR})
+            set(_Qt5Widgets_PRIVATE_DIRS_EXIST FALSE)
+        endif()
+    endforeach()
+
+    if (_Qt5Widgets_PRIVATE_DIRS_EXIST)
+        add_library(Qt5::WidgetsPrivate INTERFACE IMPORTED)
+        set_property(TARGET Qt5::WidgetsPrivate PROPERTY
+            INTERFACE_INCLUDE_DIRECTORIES ${Qt5Widgets_OWN_PRIVATE_INCLUDE_DIRS}
+        )
+        set(_Qt5Widgets_PRIVATEDEPS)
+        foreach(dep ${_Qt5Widgets_LIB_DEPENDENCIES})
+            if (TARGET ${dep}Private)
+                list(APPEND _Qt5Widgets_PRIVATEDEPS ${dep}Private)
+            endif()
+        endforeach()
+        set_property(TARGET Qt5::WidgetsPrivate PROPERTY
+            INTERFACE_LINK_LIBRARIES Qt5::Widgets ${_Qt5Widgets_PRIVATEDEPS}
+        )
+    endif()
 
     _populate_Widgets_target_properties(RELEASE "Qt5Widgets.dll" "Qt5Widgets.lib" )
 
