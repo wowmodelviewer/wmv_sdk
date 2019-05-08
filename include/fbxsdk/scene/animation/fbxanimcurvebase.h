@@ -145,7 +145,8 @@ public:
     * <ul><li>CONSTANT means a constant value matching the first/last key.
     *     <li>REPETITION means the entire function curve is looped.
     *     <li>MIRROR_REPETITION means the entire function curve is looped once backward, once forward and so on. 
-    *     <li>KEEP_SLOPE means a linear function with a slope matching the first/last key.</ul>
+    *     <li>KEEP_SLOPE means a linear function with a slope matching the first/last key.
+    *     <li>RELATIVE_REPETITION means entire function curve is looped and one loop is relative to the last loop in value.</ul>
     */
     //@{
         enum EExtrapolationType
@@ -153,7 +154,8 @@ public:
             eConstant = 1,
             eRepetition = 2,
             eMirrorRepetition = 3,
-            eKeepSlope = 4
+            eKeepSlope = 4,
+            eRelativeRepetition = 5
         } ;
 
         /** Set pre-extrapolation mode.
@@ -241,13 +243,13 @@ public:
 ** WARNING! Anything beyond these lines is for internal use, may not be documented and is subject to change without notice! **
 *****************************************************************************************************************************/
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    virtual FbxObject& Copy(const FbxObject& pObject);
+    FbxObject& Copy(const FbxObject& pObject) override;
     virtual bool Store(FbxIO* pFileObject, bool pLegacyVersion=false) = 0;
     virtual bool Retrieve(FbxIO* pFileObject) = 0;
 	virtual void ExtrapolationSyncCallback() = 0;
 
 protected:
-	virtual void Construct(const FbxObject* pFrom);
+	void Construct(const FbxObject* pFrom) override;
 
 private:
     EExtrapolationType mPreExtrapolation;

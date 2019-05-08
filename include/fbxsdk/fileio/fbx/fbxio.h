@@ -1,6 +1,6 @@
 /****************************************************************************************
  
-   Copyright (C) 2015 Autodesk, Inc.
+   Copyright (C) 2017 Autodesk, Inc.
    All rights reserved.
  
    Use of this software is subject to the terms of the Autodesk license agreement
@@ -117,7 +117,7 @@ class FbxXRefManager;
 	\li Version 7500
 	Added support for large files (>2GB). NOTE: This breaks forward compatibility (i.e. older products won't be able to open these files!!)
    
- */
+   */
 
 //File version numbers
 #define FBX_FILE_VERSION_2000		2000	//FBX 2.0
@@ -154,10 +154,12 @@ class FbxXRefManager;
 #define FBX_2013_00_COMPATIBLE		"FBX201300"
 #define FBX_2014_00_COMPATIBLE		"FBX201400"
 #define FBX_2016_00_COMPATIBLE		"FBX201600"
+#define FBX_2018_00_COMPATIBLE      "FBX201800"
+#define FBX_2019_00_COMPATIBLE      "FBX201900"
 
 //Default file version number used when writing new FBX files
 #define FBX_DEFAULT_FILE_VERSION		FBX_FILE_VERSION_7500
-#define FBX_DEFAULT_FILE_COMPATIBILITY	FBX_2016_00_COMPATIBLE
+#define FBX_DEFAULT_FILE_COMPATIBILITY	FBX_2019_00_COMPATIBLE
 
 /** Convert the FBX file version string to an integral number for <= or >= tests purposes.
   * \param pFileVersion File version string.
@@ -1672,6 +1674,7 @@ public:
 *****************************************************************************************************************************/
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     bool ProjectOpen (FbxFile * pFile, FbxReader* pReader, bool pCheckCRC = false, bool pOpenMainSection = true, FbxIOFileHeaderInfo* pFileHeaderInfo = NULL);
+	FbxStatus& GetStatus() { return mStatus; }
 
 private:
     // to resolve warning C4512: 'class' : assignment operator could not be generated
@@ -1709,7 +1712,7 @@ private:
     bool ProjectClearSection();
     bool ProjectOpenSection(int pSection);
     bool BinaryReadSectionHeader();
-    FbxInt64 BinaryReadSectionFooter(char* pSourceCheck);
+    FbxInt64 BinaryReadSectionFooter(unsigned char* pSourceCheck);
     bool BinaryReadExtensionCode(FbxInt64 pFollowingSectionStart, FbxInt64& pSectionStart, FbxUInt32& pSectionVersion);
     void BinaryReadSectionPassword();
 
@@ -1719,11 +1722,11 @@ private:
 
     FbxString GetCreationTime() const;
     void SetCreationTime(FbxString pCreationTime);
-    void CreateSourceCheck(char* lSourceCheck);
-    bool TestSourceCheck(char* pSourceCheck, char* pSourceCompany);
+    void CreateSourceCheck(unsigned char* lSourceCheck);
+    bool TestSourceCheck(unsigned char* pSourceCheck, unsigned char* pSourceCompany);
     FbxString GetMangledCreationTime();
-    void EncryptSourceCheck(char* pSourceCheck, char* pEncryptionData);
-    void DecryptSourceCheck(char* pSourceCheck, const char* pEncryptionData);
+    void EncryptSourceCheck(unsigned char* pSourceCheck, unsigned char* pEncryptionData);
+    void DecryptSourceCheck(unsigned char* pSourceCheck, const unsigned char* pEncryptionData);
 
     void EncryptPasswordV1(FbxString pOriginalPassword, FbxString &pEncryptedPassword);
     void DecryptPasswordV1(FbxString pEncryptedPassword, FbxString &pDecryptedPassword);
