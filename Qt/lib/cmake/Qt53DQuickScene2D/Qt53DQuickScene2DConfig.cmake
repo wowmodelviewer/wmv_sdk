@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DQuickScene2D_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DQuickScene2D_VERSION instead.
-set(Qt53DQuickScene2D_VERSION_STRING 5.12.0)
+set(Qt53DQuickScene2D_VERSION_STRING 5.12.3)
 
 set(Qt53DQuickScene2D_LIBRARIES Qt5::3DQuickScene2D)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DQuickScene2D)
 
     set(_Qt53DQuickScene2D_OWN_INCLUDE_DIRS "${_qt53DQuickScene2D_install_prefix}/include/" "${_qt53DQuickScene2D_install_prefix}/include/Qt3DQuickScene2D")
     set(Qt53DQuickScene2D_PRIVATE_INCLUDE_DIRS
-        "${_qt53DQuickScene2D_install_prefix}/include/Qt3DQuickScene2D/5.12.0"
-        "${_qt53DQuickScene2D_install_prefix}/include/Qt3DQuickScene2D/5.12.0/Qt3DQuickScene2D"
+        "${_qt53DQuickScene2D_install_prefix}/include/Qt3DQuickScene2D/5.12.3"
+        "${_qt53DQuickScene2D_install_prefix}/include/Qt3DQuickScene2D/5.12.3/Qt3DQuickScene2D"
     )
 
     foreach(_dir ${_Qt53DQuickScene2D_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DQuickScene2D)
     foreach(_module_dep ${_Qt53DQuickScene2D_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DQuickScene2D_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DQuickScene2D_FIND_VERSION_EXACT}
                 ${_Qt53DQuickScene2D_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DQuickScene2D_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

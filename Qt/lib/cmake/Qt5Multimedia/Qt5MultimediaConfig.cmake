@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5Multimedia_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Multimedia_VERSION instead.
-set(Qt5Multimedia_VERSION_STRING 5.12.0)
+set(Qt5Multimedia_VERSION_STRING 5.12.3)
 
 set(Qt5Multimedia_LIBRARIES Qt5::Multimedia)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Multimedia)
 
     set(_Qt5Multimedia_OWN_INCLUDE_DIRS "${_qt5Multimedia_install_prefix}/include/" "${_qt5Multimedia_install_prefix}/include/QtMultimedia")
     set(Qt5Multimedia_PRIVATE_INCLUDE_DIRS
-        "${_qt5Multimedia_install_prefix}/include/QtMultimedia/5.12.0"
-        "${_qt5Multimedia_install_prefix}/include/QtMultimedia/5.12.0/QtMultimedia"
+        "${_qt5Multimedia_install_prefix}/include/QtMultimedia/5.12.3"
+        "${_qt5Multimedia_install_prefix}/include/QtMultimedia/5.12.3/QtMultimedia"
     )
 
     foreach(_dir ${_Qt5Multimedia_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::Multimedia)
     foreach(_module_dep ${_Qt5Multimedia_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5Multimedia_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5Multimedia_FIND_VERSION_EXACT}
                 ${_Qt5Multimedia_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Multimedia_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

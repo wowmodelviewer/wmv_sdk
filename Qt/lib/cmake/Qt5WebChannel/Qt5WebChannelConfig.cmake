@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5WebChannel_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5WebChannel_VERSION instead.
-set(Qt5WebChannel_VERSION_STRING 5.12.0)
+set(Qt5WebChannel_VERSION_STRING 5.12.3)
 
 set(Qt5WebChannel_LIBRARIES Qt5::WebChannel)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::WebChannel)
 
     set(_Qt5WebChannel_OWN_INCLUDE_DIRS "${_qt5WebChannel_install_prefix}/include/" "${_qt5WebChannel_install_prefix}/include/QtWebChannel")
     set(Qt5WebChannel_PRIVATE_INCLUDE_DIRS
-        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.0"
-        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.0/QtWebChannel"
+        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.3"
+        "${_qt5WebChannel_install_prefix}/include/QtWebChannel/5.12.3/QtWebChannel"
     )
 
     foreach(_dir ${_Qt5WebChannel_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::WebChannel)
     foreach(_module_dep ${_Qt5WebChannel_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5WebChannel_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5WebChannel_FIND_VERSION_EXACT}
                 ${_Qt5WebChannel_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5WebChannel_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

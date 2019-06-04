@@ -1,8 +1,8 @@
-QT.fontdatabase_support_private.VERSION = 5.12.0
+QT.fontdatabase_support_private.VERSION = 5.12.3
 QT.fontdatabase_support_private.name = QtFontDatabaseSupport
 QT.fontdatabase_support_private.module = Qt5FontDatabaseSupport
 QT.fontdatabase_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.fontdatabase_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport/5.12.0/QtFontDatabaseSupport
+QT.fontdatabase_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtFontDatabaseSupport/5.12.3/QtFontDatabaseSupport
 QT.fontdatabase_support_private.frameworks =
 QT.fontdatabase_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.fontdatabase_support_private.depends = core_private gui_private

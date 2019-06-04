@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5SerialPort_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5SerialPort_VERSION instead.
-set(Qt5SerialPort_VERSION_STRING 5.12.0)
+set(Qt5SerialPort_VERSION_STRING 5.12.3)
 
 set(Qt5SerialPort_LIBRARIES Qt5::SerialPort)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::SerialPort)
 
     set(_Qt5SerialPort_OWN_INCLUDE_DIRS "${_qt5SerialPort_install_prefix}/include/" "${_qt5SerialPort_install_prefix}/include/QtSerialPort")
     set(Qt5SerialPort_PRIVATE_INCLUDE_DIRS
-        "${_qt5SerialPort_install_prefix}/include/QtSerialPort/5.12.0"
-        "${_qt5SerialPort_install_prefix}/include/QtSerialPort/5.12.0/QtSerialPort"
+        "${_qt5SerialPort_install_prefix}/include/QtSerialPort/5.12.3"
+        "${_qt5SerialPort_install_prefix}/include/QtSerialPort/5.12.3/QtSerialPort"
     )
 
     foreach(_dir ${_Qt5SerialPort_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::SerialPort)
     foreach(_module_dep ${_Qt5SerialPort_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5SerialPort_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5SerialPort_FIND_VERSION_EXACT}
                 ${_Qt5SerialPort_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5SerialPort_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

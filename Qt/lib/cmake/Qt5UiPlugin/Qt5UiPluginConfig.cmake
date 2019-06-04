@@ -61,7 +61,7 @@ if (NOT TARGET Qt5::UiPlugin)
     foreach(_module_dep ${_Qt5UiPlugin_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5UiPlugin_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5UiPlugin_FIND_VERSION_EXACT}
                 ${_Qt5UiPlugin_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5UiPlugin_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

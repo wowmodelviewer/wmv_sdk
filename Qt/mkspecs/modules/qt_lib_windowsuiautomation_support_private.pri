@@ -1,8 +1,8 @@
-QT.windowsuiautomation_support_private.VERSION = 5.12.0
+QT.windowsuiautomation_support_private.VERSION = 5.12.3
 QT.windowsuiautomation_support_private.name = QtWindowsUIAutomationSupport
 QT.windowsuiautomation_support_private.module = Qt5WindowsUIAutomationSupport
 QT.windowsuiautomation_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.windowsuiautomation_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport/5.12.0/QtWindowsUIAutomationSupport
+QT.windowsuiautomation_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtWindowsUIAutomationSupport/5.12.3/QtWindowsUIAutomationSupport
 QT.windowsuiautomation_support_private.frameworks =
 QT.windowsuiautomation_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.windowsuiautomation_support_private.depends = core_private gui_private

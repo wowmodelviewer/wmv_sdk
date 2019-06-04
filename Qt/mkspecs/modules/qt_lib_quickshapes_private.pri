@@ -1,8 +1,8 @@
-QT.quickshapes_private.VERSION = 5.12.0
+QT.quickshapes_private.VERSION = 5.12.3
 QT.quickshapes_private.name = QtQuickShapes
 QT.quickshapes_private.module = Qt5QuickShapes
 QT.quickshapes_private.libs = $$QT_MODULE_LIB_BASE
-QT.quickshapes_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtQuickShapes $$QT_MODULE_INCLUDE_BASE/QtQuickShapes/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtQuickShapes/5.12.0/QtQuickShapes
+QT.quickshapes_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtQuickShapes $$QT_MODULE_INCLUDE_BASE/QtQuickShapes/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtQuickShapes/5.12.3/QtQuickShapes
 QT.quickshapes_private.frameworks =
 QT.quickshapes_private.bins = $$QT_MODULE_BIN_BASE
 QT.quickshapes_private.depends = core gui_private qml quick_private

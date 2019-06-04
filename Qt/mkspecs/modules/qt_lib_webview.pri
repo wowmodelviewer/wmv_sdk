@@ -1,4 +1,4 @@
-QT.webview.VERSION = 5.12.0
+QT.webview.VERSION = 5.12.3
 QT.webview.name = QtWebView
 QT.webview.module = Qt5WebView
 QT.webview.libs = $$QT_MODULE_LIB_BASE

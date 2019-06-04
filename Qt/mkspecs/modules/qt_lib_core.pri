@@ -1,4 +1,4 @@
-QT.core.VERSION = 5.12.0
+QT.core.VERSION = 5.12.3
 QT.core.name = QtCore
 QT.core.module = Qt5Core
 QT.core.libs = $$QT_MODULE_LIB_BASE

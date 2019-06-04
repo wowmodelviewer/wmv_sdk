@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DAnimation_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DAnimation_VERSION instead.
-set(Qt53DAnimation_VERSION_STRING 5.12.0)
+set(Qt53DAnimation_VERSION_STRING 5.12.3)
 
 set(Qt53DAnimation_LIBRARIES Qt5::3DAnimation)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DAnimation)
 
     set(_Qt53DAnimation_OWN_INCLUDE_DIRS "${_qt53DAnimation_install_prefix}/include/" "${_qt53DAnimation_install_prefix}/include/Qt3DAnimation")
     set(Qt53DAnimation_PRIVATE_INCLUDE_DIRS
-        "${_qt53DAnimation_install_prefix}/include/Qt3DAnimation/5.12.0"
-        "${_qt53DAnimation_install_prefix}/include/Qt3DAnimation/5.12.0/Qt3DAnimation"
+        "${_qt53DAnimation_install_prefix}/include/Qt3DAnimation/5.12.3"
+        "${_qt53DAnimation_install_prefix}/include/Qt3DAnimation/5.12.3/Qt3DAnimation"
     )
 
     foreach(_dir ${_Qt53DAnimation_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DAnimation)
     foreach(_module_dep ${_Qt53DAnimation_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DAnimation_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DAnimation_FIND_VERSION_EXACT}
                 ${_Qt53DAnimation_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DAnimation_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

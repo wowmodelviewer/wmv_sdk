@@ -38,7 +38,7 @@
 #define QT_FEATURE_simulator_and_device -1
 #define QT_FEATURE_static -1
 #define QT_COMPILER_SUPPORTS_SIMD_ALWAYS 1
-#define QT_VERSION_STR "5.12.0"
+#define QT_VERSION_STR "5.12.3"
 #define QT_VERSION_MAJOR 5
 #define QT_VERSION_MINOR 12
-#define QT_VERSION_PATCH 0
+#define QT_VERSION_PATCH 3

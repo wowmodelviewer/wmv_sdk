@@ -1,8 +1,8 @@
-QT.designercomponents_private.VERSION = 5.12.0
+QT.designercomponents_private.VERSION = 5.12.3
 QT.designercomponents_private.name = QtDesignerComponents
 QT.designercomponents_private.module = Qt5DesignerComponents
 QT.designercomponents_private.libs = $$QT_MODULE_LIB_BASE
-QT.designercomponents_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents/5.12.0/QtDesignerComponents
+QT.designercomponents_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtDesignerComponents/5.12.3/QtDesignerComponents
 QT.designercomponents_private.frameworks =
 QT.designercomponents_private.bins = $$QT_MODULE_BIN_BASE
 QT.designercomponents_private.depends = core gui_private widgets_private designer_private xml

@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DExtras_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DExtras_VERSION instead.
-set(Qt53DExtras_VERSION_STRING 5.12.0)
+set(Qt53DExtras_VERSION_STRING 5.12.3)
 
 set(Qt53DExtras_LIBRARIES Qt5::3DExtras)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DExtras)
 
     set(_Qt53DExtras_OWN_INCLUDE_DIRS "${_qt53DExtras_install_prefix}/include/" "${_qt53DExtras_install_prefix}/include/Qt3DExtras")
     set(Qt53DExtras_PRIVATE_INCLUDE_DIRS
-        "${_qt53DExtras_install_prefix}/include/Qt3DExtras/5.12.0"
-        "${_qt53DExtras_install_prefix}/include/Qt3DExtras/5.12.0/Qt3DExtras"
+        "${_qt53DExtras_install_prefix}/include/Qt3DExtras/5.12.3"
+        "${_qt53DExtras_install_prefix}/include/Qt3DExtras/5.12.3/Qt3DExtras"
     )
 
     foreach(_dir ${_Qt53DExtras_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DExtras)
     foreach(_module_dep ${_Qt53DExtras_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DExtras_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DExtras_FIND_VERSION_EXACT}
                 ${_Qt53DExtras_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DExtras_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

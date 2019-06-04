@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5Gamepad_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Gamepad_VERSION instead.
-set(Qt5Gamepad_VERSION_STRING 5.12.0)
+set(Qt5Gamepad_VERSION_STRING 5.12.3)
 
 set(Qt5Gamepad_LIBRARIES Qt5::Gamepad)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Gamepad)
 
     set(_Qt5Gamepad_OWN_INCLUDE_DIRS "${_qt5Gamepad_install_prefix}/include/" "${_qt5Gamepad_install_prefix}/include/QtGamepad")
     set(Qt5Gamepad_PRIVATE_INCLUDE_DIRS
-        "${_qt5Gamepad_install_prefix}/include/QtGamepad/5.12.0"
-        "${_qt5Gamepad_install_prefix}/include/QtGamepad/5.12.0/QtGamepad"
+        "${_qt5Gamepad_install_prefix}/include/QtGamepad/5.12.3"
+        "${_qt5Gamepad_install_prefix}/include/QtGamepad/5.12.3/QtGamepad"
     )
 
     foreach(_dir ${_Qt5Gamepad_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::Gamepad)
     foreach(_module_dep ${_Qt5Gamepad_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5Gamepad_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5Gamepad_FIND_VERSION_EXACT}
                 ${_Qt5Gamepad_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Gamepad_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

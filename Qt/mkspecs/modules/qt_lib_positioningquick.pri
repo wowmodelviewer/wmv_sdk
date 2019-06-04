@@ -1,4 +1,4 @@
-QT.positioningquick.VERSION = 5.12.0
+QT.positioningquick.VERSION = 5.12.3
 QT.positioningquick.name = QtPositioningQuick
 QT.positioningquick.module = Qt5PositioningQuick
 QT.positioningquick.libs = $$QT_MODULE_LIB_BASE

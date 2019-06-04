@@ -18,7 +18,7 @@ function(QTQUICK_COMPILER_ADD_RESOURCES outfiles)
 
     find_package(Qt5 COMPONENTS Qml Core)
 
-    set(compiler_path "${_qt5Core_install_prefix}/bin/qmlcachegen")
+    set(compiler_path "${_qt5Core_install_prefix}/bin/qmlcachegen.exe")
     if(NOT EXISTS "${compiler_path}" )
         message(FATAL_ERROR "The package \"Qt5QuickCompilerConfig\" references the file
    \"${compiler_path}\"
@@ -57,16 +57,18 @@ but not all the files it references.
         set(rcc_file_with_compilation_units)
 
         execute_process(COMMAND ${rcc_path} -list "${input_resource}" OUTPUT_VARIABLE rcc_contents)
-        string(REGEX REPLACE "[\r\n]+" ";" rcc_contents ${rcc_contents})
-        foreach(it ${rcc_contents})
-            get_filename_component(extension ${it} EXT)
-            if(extension STREQUAL ".qml" OR extension STREQUAL ".js" OR extension STREQUAL ".ui.qml" OR extension STREQUAL ".mjs")
-                qtquick_compiler_determine_output_filename(output_file ${it})
-                add_custom_command(OUTPUT ${output_file} COMMAND ${compiler_path} ARGS --resource=${input_resource} ${it} -o ${output_file} DEPENDS ${it})
-                list(APPEND compiler_output ${output_file})
-                set(rcc_file_with_compilation_units ${input_resource})
-            endif()
-        endforeach()
+        if (NOT rcc_contents STREQUAL "")
+            string(REGEX REPLACE "[\r\n]+" ";" rcc_contents ${rcc_contents})
+            foreach(it ${rcc_contents})
+                get_filename_component(extension ${it} EXT)
+                if(extension STREQUAL ".qml" OR extension STREQUAL ".js" OR extension STREQUAL ".ui.qml" OR extension STREQUAL ".mjs")
+                    qtquick_compiler_determine_output_filename(output_file ${it})
+                    add_custom_command(OUTPUT ${output_file} COMMAND ${compiler_path} ARGS --resource=${input_resource} ${it} -o ${output_file} DEPENDS ${it})
+                    list(APPEND compiler_output ${output_file})
+                    set(rcc_file_with_compilation_units ${input_resource})
+                endif()
+            endforeach()
+        endif()
 
         if(rcc_file_with_compilation_units)
             list(APPEND rcc_files_with_compilation_units ${rcc_file_with_compilation_units})

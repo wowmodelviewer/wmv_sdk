@@ -1,4 +1,4 @@
-QT.axcontainer_private.VERSION = 5.12.0
+QT.axcontainer_private.VERSION = 5.12.3
 QT.axcontainer_private.name = QtAxContainer
 QT.axcontainer_private.module =
 QT.axcontainer_private.libs = $$QT_MODULE_LIB_BASE

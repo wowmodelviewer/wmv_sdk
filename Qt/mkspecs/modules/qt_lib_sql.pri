@@ -1,4 +1,4 @@
-QT.sql.VERSION = 5.12.0
+QT.sql.VERSION = 5.12.3
 QT.sql.name = QtSql
 QT.sql.module = Qt5Sql
 QT.sql.libs = $$QT_MODULE_LIB_BASE

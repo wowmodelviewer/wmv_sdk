@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5TextToSpeech_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5TextToSpeech_VERSION instead.
-set(Qt5TextToSpeech_VERSION_STRING 5.12.0)
+set(Qt5TextToSpeech_VERSION_STRING 5.12.3)
 
 set(Qt5TextToSpeech_LIBRARIES Qt5::TextToSpeech)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::TextToSpeech)
 
     set(_Qt5TextToSpeech_OWN_INCLUDE_DIRS "${_qt5TextToSpeech_install_prefix}/include/" "${_qt5TextToSpeech_install_prefix}/include/QtTextToSpeech")
     set(Qt5TextToSpeech_PRIVATE_INCLUDE_DIRS
-        "${_qt5TextToSpeech_install_prefix}/include/QtTextToSpeech/5.12.0"
-        "${_qt5TextToSpeech_install_prefix}/include/QtTextToSpeech/5.12.0/QtTextToSpeech"
+        "${_qt5TextToSpeech_install_prefix}/include/QtTextToSpeech/5.12.3"
+        "${_qt5TextToSpeech_install_prefix}/include/QtTextToSpeech/5.12.3/QtTextToSpeech"
     )
 
     foreach(_dir ${_Qt5TextToSpeech_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::TextToSpeech)
     foreach(_module_dep ${_Qt5TextToSpeech_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5TextToSpeech_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5TextToSpeech_FIND_VERSION_EXACT}
                 ${_Qt5TextToSpeech_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5TextToSpeech_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

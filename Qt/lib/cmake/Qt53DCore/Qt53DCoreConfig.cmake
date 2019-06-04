@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DCore_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DCore_VERSION instead.
-set(Qt53DCore_VERSION_STRING 5.12.0)
+set(Qt53DCore_VERSION_STRING 5.12.3)
 
 set(Qt53DCore_LIBRARIES Qt5::3DCore)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DCore)
 
     set(_Qt53DCore_OWN_INCLUDE_DIRS "${_qt53DCore_install_prefix}/include/" "${_qt53DCore_install_prefix}/include/Qt3DCore")
     set(Qt53DCore_PRIVATE_INCLUDE_DIRS
-        "${_qt53DCore_install_prefix}/include/Qt3DCore/5.12.0"
-        "${_qt53DCore_install_prefix}/include/Qt3DCore/5.12.0/Qt3DCore"
+        "${_qt53DCore_install_prefix}/include/Qt3DCore/5.12.3"
+        "${_qt53DCore_install_prefix}/include/Qt3DCore/5.12.3/Qt3DCore"
     )
 
     foreach(_dir ${_Qt53DCore_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DCore)
     foreach(_module_dep ${_Qt53DCore_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DCore_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DCore_FIND_VERSION_EXACT}
                 ${_Qt53DCore_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DCore_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

@@ -1,4 +1,4 @@
-QT.3dquickrender.VERSION = 5.12.0
+QT.3dquickrender.VERSION = 5.12.3
 QT.3dquickrender.name = Qt3DQuickRender
 QT.3dquickrender.module = Qt53DQuickRender
 QT.3dquickrender.libs = $$QT_MODULE_LIB_BASE

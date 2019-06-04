@@ -1,4 +1,4 @@
-QT.quickwidgets.VERSION = 5.12.0
+QT.quickwidgets.VERSION = 5.12.3
 QT.quickwidgets.name = QtQuickWidgets
 QT.quickwidgets.module = Qt5QuickWidgets
 QT.quickwidgets.libs = $$QT_MODULE_LIB_BASE

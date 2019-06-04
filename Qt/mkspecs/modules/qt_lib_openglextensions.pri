@@ -1,4 +1,4 @@
-QT.openglextensions.VERSION = 5.12.0
+QT.openglextensions.VERSION = 5.12.3
 QT.openglextensions.name = QtOpenGLExtensions
 QT.openglextensions.module = Qt5OpenGLExtensions
 QT.openglextensions.libs = $$QT_MODULE_LIB_BASE
