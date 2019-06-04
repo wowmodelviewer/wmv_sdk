@@ -1,8 +1,8 @@
-QT.egl_support_private.VERSION = 5.12.0
+QT.egl_support_private.VERSION = 5.12.3
 QT.egl_support_private.name = QtEglSupport
 QT.egl_support_private.module = Qt5EglSupport
 QT.egl_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.egl_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtEglSupport $$QT_MODULE_INCLUDE_BASE/QtEglSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtEglSupport/5.12.0/QtEglSupport
+QT.egl_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtEglSupport $$QT_MODULE_INCLUDE_BASE/QtEglSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtEglSupport/5.12.3/QtEglSupport
 QT.egl_support_private.frameworks =
 QT.egl_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.egl_support_private.depends = core_private gui_private

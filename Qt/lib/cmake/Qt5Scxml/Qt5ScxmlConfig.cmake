@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5Scxml_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5Scxml_VERSION instead.
-set(Qt5Scxml_VERSION_STRING 5.12.0)
+set(Qt5Scxml_VERSION_STRING 5.12.3)
 
 set(Qt5Scxml_LIBRARIES Qt5::Scxml)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::Scxml)
 
     set(_Qt5Scxml_OWN_INCLUDE_DIRS "${_qt5Scxml_install_prefix}/include/" "${_qt5Scxml_install_prefix}/include/QtScxml")
     set(Qt5Scxml_PRIVATE_INCLUDE_DIRS
-        "${_qt5Scxml_install_prefix}/include/QtScxml/5.12.0"
-        "${_qt5Scxml_install_prefix}/include/QtScxml/5.12.0/QtScxml"
+        "${_qt5Scxml_install_prefix}/include/QtScxml/5.12.3"
+        "${_qt5Scxml_install_prefix}/include/QtScxml/5.12.3/QtScxml"
     )
 
     foreach(_dir ${_Qt5Scxml_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::Scxml)
     foreach(_module_dep ${_Qt5Scxml_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5Scxml_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5Scxml_FIND_VERSION_EXACT}
                 ${_Qt5Scxml_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5Scxml_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

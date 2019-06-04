@@ -1,4 +1,4 @@
-QT.3dquickextras.VERSION = 5.12.0
+QT.3dquickextras.VERSION = 5.12.3
 QT.3dquickextras.name = Qt3DQuickExtras
 QT.3dquickextras.module = Qt53DQuickExtras
 QT.3dquickextras.libs = $$QT_MODULE_LIB_BASE

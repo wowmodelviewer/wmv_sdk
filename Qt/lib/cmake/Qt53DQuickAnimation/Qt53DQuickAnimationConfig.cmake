@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DQuickAnimation_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DQuickAnimation_VERSION instead.
-set(Qt53DQuickAnimation_VERSION_STRING 5.12.0)
+set(Qt53DQuickAnimation_VERSION_STRING 5.12.3)
 
 set(Qt53DQuickAnimation_LIBRARIES Qt5::3DQuickAnimation)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DQuickAnimation)
 
     set(_Qt53DQuickAnimation_OWN_INCLUDE_DIRS "${_qt53DQuickAnimation_install_prefix}/include/" "${_qt53DQuickAnimation_install_prefix}/include/Qt3DQuickAnimation")
     set(Qt53DQuickAnimation_PRIVATE_INCLUDE_DIRS
-        "${_qt53DQuickAnimation_install_prefix}/include/Qt3DQuickAnimation/5.12.0"
-        "${_qt53DQuickAnimation_install_prefix}/include/Qt3DQuickAnimation/5.12.0/Qt3DQuickAnimation"
+        "${_qt53DQuickAnimation_install_prefix}/include/Qt3DQuickAnimation/5.12.3"
+        "${_qt53DQuickAnimation_install_prefix}/include/Qt3DQuickAnimation/5.12.3/Qt3DQuickAnimation"
     )
 
     foreach(_dir ${_Qt53DQuickAnimation_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DQuickAnimation)
     foreach(_module_dep ${_Qt53DQuickAnimation_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DQuickAnimation_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DQuickAnimation_FIND_VERSION_EXACT}
                 ${_Qt53DQuickAnimation_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DQuickAnimation_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

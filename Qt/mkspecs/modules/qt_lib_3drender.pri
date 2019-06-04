@@ -1,4 +1,4 @@
-QT.3drender.VERSION = 5.12.0
+QT.3drender.VERSION = 5.12.3
 QT.3drender.name = Qt3DRender
 QT.3drender.module = Qt53DRender
 QT.3drender.libs = $$QT_MODULE_LIB_BASE

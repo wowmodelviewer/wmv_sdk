@@ -1,4 +1,4 @@
-QT.serialbus.VERSION = 5.12.0
+QT.serialbus.VERSION = 5.12.3
 QT.serialbus.name = QtSerialBus
 QT.serialbus.module = Qt5SerialBus
 QT.serialbus.libs = $$QT_MODULE_LIB_BASE

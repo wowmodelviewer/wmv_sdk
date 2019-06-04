@@ -1,4 +1,4 @@
-QT.designer.VERSION = 5.12.0
+QT.designer.VERSION = 5.12.3
 QT.designer.name = QtDesigner
 QT.designer.module = Qt5Designer
 QT.designer.libs = $$QT_MODULE_LIB_BASE

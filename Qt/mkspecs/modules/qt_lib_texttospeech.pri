@@ -1,4 +1,4 @@
-QT.texttospeech.VERSION = 5.12.0
+QT.texttospeech.VERSION = 5.12.3
 QT.texttospeech.name = QtTextToSpeech
 QT.texttospeech.module = Qt5TextToSpeech
 QT.texttospeech.libs = $$QT_MODULE_LIB_BASE

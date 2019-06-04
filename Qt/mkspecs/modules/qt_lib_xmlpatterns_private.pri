@@ -1,8 +1,8 @@
-QT.xmlpatterns_private.VERSION = 5.12.0
+QT.xmlpatterns_private.VERSION = 5.12.3
 QT.xmlpatterns_private.name = QtXmlPatterns
 QT.xmlpatterns_private.module =
 QT.xmlpatterns_private.libs = $$QT_MODULE_LIB_BASE
-QT.xmlpatterns_private.includes = $$QT_MODULE_INCLUDE_BASE/QtXmlPatterns/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtXmlPatterns/5.12.0/QtXmlPatterns
+QT.xmlpatterns_private.includes = $$QT_MODULE_INCLUDE_BASE/QtXmlPatterns/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtXmlPatterns/5.12.3/QtXmlPatterns
 QT.xmlpatterns_private.frameworks =
 QT.xmlpatterns_private.depends = core_private xmlpatterns
 QT.xmlpatterns_private.uses =

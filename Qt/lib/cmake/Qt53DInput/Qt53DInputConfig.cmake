@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DInput_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DInput_VERSION instead.
-set(Qt53DInput_VERSION_STRING 5.12.0)
+set(Qt53DInput_VERSION_STRING 5.12.3)
 
 set(Qt53DInput_LIBRARIES Qt5::3DInput)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DInput)
 
     set(_Qt53DInput_OWN_INCLUDE_DIRS "${_qt53DInput_install_prefix}/include/" "${_qt53DInput_install_prefix}/include/Qt3DInput")
     set(Qt53DInput_PRIVATE_INCLUDE_DIRS
-        "${_qt53DInput_install_prefix}/include/Qt3DInput/5.12.0"
-        "${_qt53DInput_install_prefix}/include/Qt3DInput/5.12.0/Qt3DInput"
+        "${_qt53DInput_install_prefix}/include/Qt3DInput/5.12.3"
+        "${_qt53DInput_install_prefix}/include/Qt3DInput/5.12.3/Qt3DInput"
     )
 
     foreach(_dir ${_Qt53DInput_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DInput)
     foreach(_module_dep ${_Qt53DInput_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DInput_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DInput_FIND_VERSION_EXACT}
                 ${_Qt53DInput_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DInput_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

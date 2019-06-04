@@ -1,4 +1,4 @@
-QT.multimediawidgets.VERSION = 5.12.0
+QT.multimediawidgets.VERSION = 5.12.3
 QT.multimediawidgets.name = QtMultimediaWidgets
 QT.multimediawidgets.module = Qt5MultimediaWidgets
 QT.multimediawidgets.libs = $$QT_MODULE_LIB_BASE

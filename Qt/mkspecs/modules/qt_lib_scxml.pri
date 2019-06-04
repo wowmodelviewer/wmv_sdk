@@ -1,4 +1,4 @@
-QT.scxml.VERSION = 5.12.0
+QT.scxml.VERSION = 5.12.3
 QT.scxml.name = QtScxml
 QT.scxml.module = Qt5Scxml
 QT.scxml.libs = $$QT_MODULE_LIB_BASE

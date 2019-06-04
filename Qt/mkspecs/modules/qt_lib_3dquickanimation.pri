@@ -1,4 +1,4 @@
-QT.3dquickanimation.VERSION = 5.12.0
+QT.3dquickanimation.VERSION = 5.12.3
 QT.3dquickanimation.name = Qt3DQuickAnimation
 QT.3dquickanimation.module = Qt53DQuickAnimation
 QT.3dquickanimation.libs = $$QT_MODULE_LIB_BASE

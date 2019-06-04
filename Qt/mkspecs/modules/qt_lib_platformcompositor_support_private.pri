@@ -1,8 +1,8 @@
-QT.platformcompositor_support_private.VERSION = 5.12.0
+QT.platformcompositor_support_private.VERSION = 5.12.3
 QT.platformcompositor_support_private.name = QtPlatformCompositorSupport
 QT.platformcompositor_support_private.module = Qt5PlatformCompositorSupport
 QT.platformcompositor_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.platformcompositor_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport/5.12.0/QtPlatformCompositorSupport
+QT.platformcompositor_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtPlatformCompositorSupport/5.12.3/QtPlatformCompositorSupport
 QT.platformcompositor_support_private.frameworks =
 QT.platformcompositor_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.platformcompositor_support_private.depends = core_private gui_private

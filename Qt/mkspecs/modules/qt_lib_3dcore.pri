@@ -1,4 +1,4 @@
-QT.3dcore.VERSION = 5.12.0
+QT.3dcore.VERSION = 5.12.3
 QT.3dcore.name = Qt3DCore
 QT.3dcore.module = Qt53DCore
 QT.3dcore.libs = $$QT_MODULE_LIB_BASE

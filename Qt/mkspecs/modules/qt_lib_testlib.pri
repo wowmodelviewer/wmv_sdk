@@ -1,4 +1,4 @@
-QT.testlib.VERSION = 5.12.0
+QT.testlib.VERSION = 5.12.3
 QT.testlib.name = QtTest
 QT.testlib.module = Qt5Test
 QT.testlib.libs = $$QT_MODULE_LIB_BASE

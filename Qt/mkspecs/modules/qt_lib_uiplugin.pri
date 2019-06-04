@@ -1,4 +1,4 @@
-QT.uiplugin.VERSION = 5.12.0
+QT.uiplugin.VERSION = 5.12.3
 QT.uiplugin.name = QtUiPlugin
 QT.uiplugin.module = 
 QT.uiplugin.libs = $$QT_MODULE_LIB_BASE

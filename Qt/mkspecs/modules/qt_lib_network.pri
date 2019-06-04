@@ -1,4 +1,4 @@
-QT.network.VERSION = 5.12.0
+QT.network.VERSION = 5.12.3
 QT.network.name = QtNetwork
 QT.network.module = Qt5Network
 QT.network.libs = $$QT_MODULE_LIB_BASE

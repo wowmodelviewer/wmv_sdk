@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DQuick_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DQuick_VERSION instead.
-set(Qt53DQuick_VERSION_STRING 5.12.0)
+set(Qt53DQuick_VERSION_STRING 5.12.3)
 
 set(Qt53DQuick_LIBRARIES Qt5::3DQuick)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DQuick)
 
     set(_Qt53DQuick_OWN_INCLUDE_DIRS "${_qt53DQuick_install_prefix}/include/" "${_qt53DQuick_install_prefix}/include/Qt3DQuick")
     set(Qt53DQuick_PRIVATE_INCLUDE_DIRS
-        "${_qt53DQuick_install_prefix}/include/Qt3DQuick/5.12.0"
-        "${_qt53DQuick_install_prefix}/include/Qt3DQuick/5.12.0/Qt3DQuick"
+        "${_qt53DQuick_install_prefix}/include/Qt3DQuick/5.12.3"
+        "${_qt53DQuick_install_prefix}/include/Qt3DQuick/5.12.3/Qt3DQuick"
     )
 
     foreach(_dir ${_Qt53DQuick_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DQuick)
     foreach(_module_dep ${_Qt53DQuick_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DQuick_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DQuick_FIND_VERSION_EXACT}
                 ${_Qt53DQuick_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DQuick_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

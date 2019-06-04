@@ -1,8 +1,8 @@
-QT.vulkan_support_private.VERSION = 5.12.0
+QT.vulkan_support_private.VERSION = 5.12.3
 QT.vulkan_support_private.name = QtVulkanSupport
 QT.vulkan_support_private.module = Qt5VulkanSupport
 QT.vulkan_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.vulkan_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport/5.12.0/QtVulkanSupport
+QT.vulkan_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtVulkanSupport/5.12.3/QtVulkanSupport
 QT.vulkan_support_private.frameworks =
 QT.vulkan_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.vulkan_support_private.depends = core_private gui_private

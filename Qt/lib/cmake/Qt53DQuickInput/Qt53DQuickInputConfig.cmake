@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt53DQuickInput_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt53DQuickInput_VERSION instead.
-set(Qt53DQuickInput_VERSION_STRING 5.12.0)
+set(Qt53DQuickInput_VERSION_STRING 5.12.3)
 
 set(Qt53DQuickInput_LIBRARIES Qt5::3DQuickInput)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::3DQuickInput)
 
     set(_Qt53DQuickInput_OWN_INCLUDE_DIRS "${_qt53DQuickInput_install_prefix}/include/" "${_qt53DQuickInput_install_prefix}/include/Qt3DQuickInput")
     set(Qt53DQuickInput_PRIVATE_INCLUDE_DIRS
-        "${_qt53DQuickInput_install_prefix}/include/Qt3DQuickInput/5.12.0"
-        "${_qt53DQuickInput_install_prefix}/include/Qt3DQuickInput/5.12.0/Qt3DQuickInput"
+        "${_qt53DQuickInput_install_prefix}/include/Qt3DQuickInput/5.12.3"
+        "${_qt53DQuickInput_install_prefix}/include/Qt3DQuickInput/5.12.3/Qt3DQuickInput"
     )
 
     foreach(_dir ${_Qt53DQuickInput_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::3DQuickInput)
     foreach(_module_dep ${_Qt53DQuickInput_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt53DQuickInput_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt53DQuickInput_FIND_VERSION_EXACT}
                 ${_Qt53DQuickInput_DEPENDENCIES_FIND_QUIET}
                 ${_Qt53DQuickInput_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

@@ -1,4 +1,4 @@
-QT.repparser.VERSION = 5.12.0
+QT.repparser.VERSION = 5.12.3
 QT.repparser.name = QtRepParser
 QT.repparser.module = 
 QT.repparser.libs = $$QT_MODULE_LIB_BASE

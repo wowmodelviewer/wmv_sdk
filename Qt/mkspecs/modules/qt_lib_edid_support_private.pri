@@ -1,8 +1,8 @@
-QT.edid_support_private.VERSION = 5.12.0
+QT.edid_support_private.VERSION = 5.12.3
 QT.edid_support_private.name = QtEdidSupport
 QT.edid_support_private.module = Qt5EdidSupport
 QT.edid_support_private.libs = $$QT_MODULE_LIB_BASE
-QT.edid_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtEdidSupport $$QT_MODULE_INCLUDE_BASE/QtEdidSupport/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtEdidSupport/5.12.0/QtEdidSupport
+QT.edid_support_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtEdidSupport $$QT_MODULE_INCLUDE_BASE/QtEdidSupport/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtEdidSupport/5.12.3/QtEdidSupport
 QT.edid_support_private.frameworks =
 QT.edid_support_private.bins = $$QT_MODULE_BIN_BASE
 QT.edid_support_private.depends = core_private

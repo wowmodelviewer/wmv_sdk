@@ -1,8 +1,8 @@
-QT.quickparticles_private.VERSION = 5.12.0
+QT.quickparticles_private.VERSION = 5.12.3
 QT.quickparticles_private.name = QtQuickParticles
 QT.quickparticles_private.module = Qt5QuickParticles
 QT.quickparticles_private.libs = $$QT_MODULE_LIB_BASE
-QT.quickparticles_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtQuickParticles $$QT_MODULE_INCLUDE_BASE/QtQuickParticles/5.12.0 $$QT_MODULE_INCLUDE_BASE/QtQuickParticles/5.12.0/QtQuickParticles
+QT.quickparticles_private.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtQuickParticles $$QT_MODULE_INCLUDE_BASE/QtQuickParticles/5.12.3 $$QT_MODULE_INCLUDE_BASE/QtQuickParticles/5.12.3/QtQuickParticles
 QT.quickparticles_private.frameworks =
 QT.quickparticles_private.bins = $$QT_MODULE_BIN_BASE
 QT.quickparticles_private.depends = core_private gui_private qml_private quick_private

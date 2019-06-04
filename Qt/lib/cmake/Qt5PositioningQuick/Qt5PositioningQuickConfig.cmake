@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5PositioningQuick_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5PositioningQuick_VERSION instead.
-set(Qt5PositioningQuick_VERSION_STRING 5.12.0)
+set(Qt5PositioningQuick_VERSION_STRING 5.12.3)
 
 set(Qt5PositioningQuick_LIBRARIES Qt5::PositioningQuick)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::PositioningQuick)
 
     set(_Qt5PositioningQuick_OWN_INCLUDE_DIRS "${_qt5PositioningQuick_install_prefix}/include/" "${_qt5PositioningQuick_install_prefix}/include/QtPositioningQuick")
     set(Qt5PositioningQuick_PRIVATE_INCLUDE_DIRS
-        "${_qt5PositioningQuick_install_prefix}/include/QtPositioningQuick/5.12.0"
-        "${_qt5PositioningQuick_install_prefix}/include/QtPositioningQuick/5.12.0/QtPositioningQuick"
+        "${_qt5PositioningQuick_install_prefix}/include/QtPositioningQuick/5.12.3"
+        "${_qt5PositioningQuick_install_prefix}/include/QtPositioningQuick/5.12.3/QtPositioningQuick"
     )
 
     foreach(_dir ${_Qt5PositioningQuick_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::PositioningQuick)
     foreach(_module_dep ${_Qt5PositioningQuick_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5PositioningQuick_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5PositioningQuick_FIND_VERSION_EXACT}
                 ${_Qt5PositioningQuick_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5PositioningQuick_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH

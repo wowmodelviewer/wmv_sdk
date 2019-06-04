@@ -6,7 +6,7 @@ endif()
 get_filename_component(_qt5WebView_install_prefix "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # For backwards compatibility only. Use Qt5WebView_VERSION instead.
-set(Qt5WebView_VERSION_STRING 5.12.0)
+set(Qt5WebView_VERSION_STRING 5.12.3)
 
 set(Qt5WebView_LIBRARIES Qt5::WebView)
 
@@ -49,8 +49,8 @@ if (NOT TARGET Qt5::WebView)
 
     set(_Qt5WebView_OWN_INCLUDE_DIRS "${_qt5WebView_install_prefix}/include/" "${_qt5WebView_install_prefix}/include/QtWebView")
     set(Qt5WebView_PRIVATE_INCLUDE_DIRS
-        "${_qt5WebView_install_prefix}/include/QtWebView/5.12.0"
-        "${_qt5WebView_install_prefix}/include/QtWebView/5.12.0/QtWebView"
+        "${_qt5WebView_install_prefix}/include/QtWebView/5.12.3"
+        "${_qt5WebView_install_prefix}/include/QtWebView/5.12.3/QtWebView"
     )
 
     foreach(_dir ${_Qt5WebView_OWN_INCLUDE_DIRS})
@@ -93,7 +93,7 @@ if (NOT TARGET Qt5::WebView)
     foreach(_module_dep ${_Qt5WebView_MODULE_DEPENDENCIES})
         if (NOT Qt5${_module_dep}_FOUND)
             find_package(Qt5${_module_dep}
-                5.12.0 ${_Qt5WebView_FIND_VERSION_EXACT}
+                5.12.3 ${_Qt5WebView_FIND_VERSION_EXACT}
                 ${_Qt5WebView_DEPENDENCIES_FIND_QUIET}
                 ${_Qt5WebView_FIND_DEPENDENCIES_REQUIRED}
                 PATHS "${CMAKE_CURRENT_LIST_DIR}/.." NO_DEFAULT_PATH
